@@ -209,70 +209,77 @@ section { padding: 5rem 0; }
 
 /* CREATOR GRID */
 .creators-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem; margin-bottom: 2rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.2rem; margin-bottom: 2rem;
 }
 
 .creator-card {
   background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px; padding: 1.4rem; cursor: pointer;
-  transition: all 0.3s cubic-bezier(.4,0,.2,1); position: relative;
+  border-radius: 16px; padding: 1.4rem 1.4rem 1.2rem; cursor: pointer;
+  transition: all 0.35s cubic-bezier(.4,0,.2,1); position: relative;
   overflow: hidden;
 }
 .creator-card:hover {
-  border-color: rgba(200,168,78,0.35); transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  border-color: rgba(200,168,78,0.4); transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 20px rgba(200,168,78,0.06);
 }
 .creator-card.active {
   border-color: var(--gold); background: rgba(200,168,78,0.06);
   box-shadow: 0 0 30px rgba(200,168,78,0.12);
 }
-.creator-card.mc-card { border-color: rgba(200,168,78,0.2); }
+.creator-card.mc-card { border-color: rgba(200,168,78,0.25); }
 .creator-card.mc-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0;
   height: 3px; background: var(--gradient-gold);
 }
-.card-top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
-.card-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,168,78,0.2);background:var(--dark-surface);flex-shrink:0}
-.card-avatar-fallback{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(200,168,78,0.08);border:2px solid rgba(200,168,78,0.15);flex-shrink:0}
+.card-top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+.card-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,168,78,0.2);background:var(--dark-surface);flex-shrink:0}
+.card-avatar-fallback{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:var(--gold);background:rgba(200,168,78,0.08);border:2px solid rgba(200,168,78,0.15);flex-shrink:0;font-family:'Syne',sans-serif;letter-spacing:0.05em}
 .expanded-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(200,168,78,0.3);background:var(--dark-surface)}
-.expanded-avatar-fallback{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(200,168,78,0.08);border:3px solid rgba(200,168,78,0.3)}
+.expanded-avatar-fallback{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:var(--gold);background:rgba(200,168,78,0.08);border:3px solid rgba(200,168,78,0.3);font-family:'Syne',sans-serif}
 .card-flag { font-size: 1.8rem; }
-.card-info { flex: 1; }
+.card-info { flex: 1; min-width: 0; }
 .card-name {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem;
-  line-height: 1.2; margin-bottom: 0.15rem;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+  line-height: 1.25; margin-bottom: 0.2rem;
 }
-.card-country { font-size: 0.72rem; color: var(--text-muted); }
+.card-country { font-size: 0.75rem; color: var(--text-muted); }
+.card-role-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
 .card-role-badge {
-  font-family: 'Syne', sans-serif; font-size: 0.55rem; font-weight: 800;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.2rem 0.5rem; border-radius: 5px; white-space: nowrap;
+  font-family: 'Syne', sans-serif; font-size: 0.6rem; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.25rem 0.7rem; border-radius: 6px; white-space: nowrap;
 }
-.card-role-badge.mc-badge { background: rgba(200,168,78,0.2); color: var(--gold); }
-.card-role-badge.part-badge { background: rgba(0,255,136,0.1); color: var(--electric); }
+.card-role-badge.mc-badge { background: rgba(200,168,78,0.15); color: var(--gold); border: 1px solid rgba(200,168,78,0.25); }
+.card-role-badge.part-badge { background: rgba(0,255,136,0.08); color: var(--electric); border: 1px solid rgba(0,255,136,0.15); }
+.card-tier {
+  font-family: 'Syne', sans-serif; font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.2rem 0.5rem; border-radius: 5px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: var(--text-muted);
+}
 
 .card-stats {
-  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.7rem;
 }
 .card-stat {
   padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.05); border-radius: 8px;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
 }
 .card-stat .cs-val { color: var(--gold); font-weight: 700; }
-.card-stat .cs-plat { color: var(--text-muted); margin-left: 0.2rem; }
+.card-stat .cs-plat { color: var(--text-muted); margin-left: 0.25rem; }
 
-.card-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.card-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
 .card-tag {
-  font-size: 0.6rem; padding: 0.15rem 0.45rem;
+  font-size: 0.6rem; padding: 0.15rem 0.5rem;
   background: rgba(200,168,78,0.06); border: 1px solid rgba(200,168,78,0.1);
-  border-radius: 4px; color: var(--gold-light);
+  border-radius: 5px; color: var(--gold-light);
 }
 
 .card-review-indicator {
   position: absolute; top: 0.8rem; right: 0.8rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 /* Card status styles */
@@ -717,7 +724,10 @@ async function initSupabase(retries) {
 function setSyncStatus(status) {
   const el = document.getElementById('syncStatus');
   if (!el) return;
-  const map = {saved:['✅ Saved','saved'],saving:['⏳ Saving...','saving'],offline:['💾 Local Mode','offline'],connecting:['⏳ Connecting...','connecting']};
+  // Hide completely if Supabase not configured
+  if (status === 'offline' && !SUPABASE_URL.startsWith('http')) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  const map = {saved:['✅ Synced','saved'],saving:['⏳ Saving...','saving'],offline:['💾 Local Mode','offline'],connecting:['⏳ Connecting...','connecting']};
   const [text,cls] = map[status] || ['',''];
   el.textContent = text; el.className = 'sync-status ' + cls;
 }
@@ -952,16 +962,18 @@ let activeFilter = 'all';
 function getAvatar(c, size) {
   const cls = size==='lg' ? 'expanded-avatar' : 'card-avatar';
   const fbCls = size==='lg' ? 'expanded-avatar-fallback' : 'card-avatar-fallback';
-  if (c.igHandle) return `<img class="${cls}" src="https://unavatar.io/instagram/${c.igHandle}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="${fbCls}" style="display:none">${c.flag}</div>`;
-  return `<div class="${fbCls}">${c.flag}</div>`;
+  const initials = c.name.split(/[\s()]+/).filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  if (c.igHandle) return `<img class="${cls}" src="https://unavatar.io/instagram/${c.igHandle}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="${fbCls}" style="display:none">${initials}</div>`;
+  return `<div class="${fbCls}">${initials}</div>`;
 }
 
 function buildCard(c) {
   const isMC = c.role === 'MC Host' || c.role === 'Potential Host';
   const statusClass = reviewState[c.id] ? `status-${reviewState[c.id]}` : '';
   const statusIcon = {approved:'✅',rejected:'❌',discuss:'💬'}[reviewState[c.id]] || '';
-  const roleLabel = c.role === 'Potential Host' ? '🎙️ POTENTIAL HOST' : (c.role === 'MC Host' ? '🎙️ MC HOST' : '⚽ PARTICIPANT');
+  const roleLabel = c.role === 'Potential Host' ? '🎙 Host Candidate' : (c.role === 'MC Host' ? '🎙 MC Host' : '⚽ Participant');
   const roleBadge = `<span class="card-role-badge ${isMC ? 'mc-badge' : 'part-badge'}">${roleLabel}</span>`;
+  const tierBadge = c.tier && c.tier !== '—' ? `<span class="card-tier">${c.tier}</span>` : '';
   const statsHtml = c.platforms.map(p => `<div class="card-stat"><span class="cs-val">${p.followers}</span><span class="cs-plat">${p.name}</span></div>`).join('');
   const tagsHtml = c.tags.slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('');
   return `<div class="creator-card ${isMC?'mc-card':''} ${statusClass}" data-id="${c.id}" data-country="${c.countryCode}" onclick="openCard('${c.id}')">
@@ -972,8 +984,8 @@ function buildCard(c) {
         <div class="card-name">${c.name}</div>
         <div class="card-country">${c.flag} ${c.country} · ${c.category}</div>
       </div>
-      ${roleBadge}
     </div>
+    <div class="card-role-row">${roleBadge}${tierBadge}</div>
     <div class="card-stats">${statsHtml}</div>
     <div class="card-tags">${tagsHtml}</div>
   </div>`;
