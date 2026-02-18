@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKX — Cheer Your Nation Live | Campaign Strategy</title>
-<meta name="description" content="Interactive client review portal for the OKX World Cup 2026 influencer campaign. 24 creators across 8 MENA markets.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -507,7 +506,7 @@ section { padding: 5rem 0; }
   .budget-split { grid-template-columns: 1fr; }
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -687,11 +686,6 @@ section { padding: 5rem 0; }
 <div class="toast" id="toast"></div>
 
 <script>
-function escapeHTML(str) {
-  const d = document.createElement('div');
-  d.appendChild(document.createTextNode(str));
-  return d.innerHTML;
-}
 const reviewState = {};
 const clientNotes = {};
 const countryRequests = {};
@@ -699,17 +693,21 @@ let saveTimer = null;
 
 // ====== SUPABASE CONFIG ======
 // Replace these with your Supabase project URL and anon key
-const SUPABASE_URL = 'https://trxifnxyrncsoxgklwcq.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyeGlmbnh5cm5jc294Z2tsd2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0NDI4MDYsImV4cCI6MjA4NzAxODgwNn0.kB0PKy1CLxsJIU1T2JIbtyDYV1HK0Pf3zaOsN_Kp5vc';
-let supabase = null;
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+let sbClient = null;
 let dbReady = false;
 
-async function initSupabase() {
+async function initSupabase(retries) {
+  retries = retries || 0;
   try {
-    if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function' || !SUPABASE_URL.startsWith('http')) {
+    // CDN might still be loading (async script)
+    if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function') {
+      if (retries < 5) { setTimeout(function(){ initSupabase(retries + 1); }, 1000); return; }
       setSyncStatus('offline'); return;
     }
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (!SUPABASE_URL.startsWith('http')) { setSyncStatus('offline'); return; }
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     dbReady = true;
     setSyncStatus('saved');
     await loadFromDB();
@@ -727,7 +725,7 @@ function setSyncStatus(status) {
 async function loadFromDB() {
   if (!dbReady) return;
   try {
-    const {data,error} = await supabase.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
+    const {data,error} = await sbClient.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
     if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
     if (data) {
       if (data.decisions) Object.assign(reviewState, data.decisions);
@@ -746,7 +744,7 @@ async function saveToDB() {
   setSyncStatus('saving');
   try {
     const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, updated_at:new Date().toISOString() };
-    const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+    const {error} = await sbClient.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
     if (error) throw error;
     setSyncStatus('saved');
   } catch(e) { console.warn('Save failed', e); setSyncStatus('offline'); }
@@ -763,7 +761,7 @@ async function submitReview() {
   if (dbReady) {
     try {
       const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, submitted_at:new Date().toISOString(), updated_at:new Date().toISOString() };
-      const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+      const {error} = await sbClient.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
       if (error) throw error;
       showToast('🚀 Selections submitted! Agency team notified to begin outreach.');
       document.getElementById('submitBtn').disabled = true;
@@ -797,7 +795,7 @@ function showAgencyPanel(data) {
         <span class="sr-name">${c.name}</span>
         <span class="sr-country">${c.country}</span>
         <span class="sr-status st-${st}">${statusIcons[st]} ${statusLabels[st]}</span>
-        ${notes[c.id] ? `<div class="sr-note">📝 ${escapeHTML(notes[c.id])}</div>` : ''}
+        ${notes[c.id] ? `<div class="sr-note">📝 ${notes[c.id]}</div>` : ''}
       </div>`;
     });
   });
@@ -1085,7 +1083,7 @@ function openCard(id) {
       <button class="review-btn reject ${currentStatus==='rejected'?'selected':''}" onclick="setReview('${c.id}','rejected',this)">❌ Reject</button>
       <button class="review-btn discuss ${currentStatus==='discuss'?'selected':''}" onclick="setReview('${c.id}','discuss',this)">💬 Discuss</button>
     </div>
-    <div class="client-notes-area"><label>Client Notes</label><textarea placeholder="Add feedback, questions, or alternatives..." oninput="saveNote('${c.id}',this.value)">${escapeHTML(currentNote)}</textarea></div>`;
+    <div class="client-notes-area"><label>Client Notes</label><textarea placeholder="Add feedback, questions, or alternatives..." oninput="saveNote('${c.id}',this.value)">${currentNote}</textarea></div>`;
   document.getElementById('creatorOverlay').classList.add('visible');
 }
 
