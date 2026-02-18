@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKX — Cheer Your Nation Live | Campaign Strategy</title>
+<meta name="description" content="Interactive client review portal for the OKX World Cup 2026 influencer campaign. 24 creators across 8 MENA markets.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -686,6 +687,11 @@ section { padding: 5rem 0; }
 <div class="toast" id="toast"></div>
 
 <script>
+function escapeHTML(str) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
 const reviewState = {};
 const clientNotes = {};
 const countryRequests = {};
@@ -791,7 +797,7 @@ function showAgencyPanel(data) {
         <span class="sr-name">${c.name}</span>
         <span class="sr-country">${c.country}</span>
         <span class="sr-status st-${st}">${statusIcons[st]} ${statusLabels[st]}</span>
-        ${notes[c.id] ? `<div class="sr-note">📝 ${notes[c.id]}</div>` : ''}
+        ${notes[c.id] ? `<div class="sr-note">📝 ${escapeHTML(notes[c.id])}</div>` : ''}
       </div>`;
     });
   });
@@ -1079,7 +1085,7 @@ function openCard(id) {
       <button class="review-btn reject ${currentStatus==='rejected'?'selected':''}" onclick="setReview('${c.id}','rejected',this)">❌ Reject</button>
       <button class="review-btn discuss ${currentStatus==='discuss'?'selected':''}" onclick="setReview('${c.id}','discuss',this)">💬 Discuss</button>
     </div>
-    <div class="client-notes-area"><label>Client Notes</label><textarea placeholder="Add feedback, questions, or alternatives..." oninput="saveNote('${c.id}',this.value)">${currentNote}</textarea></div>`;
+    <div class="client-notes-area"><label>Client Notes</label><textarea placeholder="Add feedback, questions, or alternatives..." oninput="saveNote('${c.id}',this.value)">${escapeHTML(currentNote)}</textarea></div>`;
   document.getElementById('creatorOverlay').classList.add('visible');
 }
 
