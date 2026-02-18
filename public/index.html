@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKX — Cheer Your Nation Live | Campaign Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f5f0;
+  --gold: #c8a84e;
+  --gold-light: #e8d48e;
+  --blue: #1a73e8;
+  --electric: #00ff88;
+  --red: #ff3b3b;
+  --dark-surface: #111111;
+  --card-bg: #1a1a1a;
+  --text-muted: #8a8a8a;
+  --gradient-gold: linear-gradient(135deg, #c8a84e 0%, #e8d48e 50%, #c8a84e 100%);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(200,168,78,0.1);
+  padding: 0.8rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem; color: var(--gold); }
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-links a {
+  color: var(--text-muted); text-decoration: none; font-size: 0.72rem;
+  letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.sync-status{font-size:0.6rem;padding:0.25rem 0.6rem;border-radius:100px;font-weight:600;letter-spacing:0.05em;transition:all 0.3s}
+.sync-status.saved{background:rgba(0,255,136,0.1);color:#00ff88;border:1px solid rgba(0,255,136,0.2)}
+.sync-status.saving{background:rgba(200,168,78,0.1);color:var(--gold);border:1px solid rgba(200,168,78,0.2)}
+.sync-status.offline{background:rgba(255,59,59,0.1);color:#ff3b3b;border:1px solid rgba(255,59,59,0.2)}
+.sync-status.connecting{background:rgba(200,168,78,0.1);color:var(--gold);border:1px solid rgba(200,168,78,0.2)}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 5rem 0; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  position: relative; padding-top: 4rem;
+}
+.hero::before {
+  content: ''; position: absolute;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(200,168,78,0.06) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.hero-label {
+  font-family: 'Syne', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  letter-spacing: 0.03em; line-height: 0.95; margin-bottom: 1rem;
+}
+.hero-sub {
+  font-family: 'Syne', sans-serif; font-size: 1.3rem;
+  color: var(--gold); font-weight: 700; margin-bottom: 2rem;
+}
+.hero-flags {
+  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem;
+}
+.hero-flag {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.9rem; background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 100px;
+  font-size: 0.78rem;
+}
+.hero-flag .hf { font-size: 1.1rem; }
+.hero-stats {
+  display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+  margin-top: 1rem;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat .num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold);
+}
+.hero-stat .lbl {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted);
+}
+
+/* SECTION HEADERS */
+.section-tag {
+  font-family: 'Syne', sans-serif; font-size: 0.65rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1rem;
+}
+.section-desc {
+  font-size: 0.95rem; color: var(--text-muted); max-width: 650px; line-height: 1.7; margin-bottom: 2.5rem;
+}
+
+/* CARDS */
+.card {
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;
+}
+.card-gold { border-color: rgba(200,168,78,0.2); }
+
+/* TIMELINE */
+.timeline { position: relative; }
+.timeline::before {
+  content: ''; position: absolute; left: 24px; top: 0; bottom: 0;
+  width: 2px; background: rgba(200,168,78,0.15);
+}
+.tl-item {
+  display: flex; gap: 1.5rem; margin-bottom: 2rem; position: relative;
+}
+.tl-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--gold); margin-top: 0.4rem; flex-shrink: 0;
+  position: relative; left: 19px; z-index: 1;
+}
+.tl-content { flex: 1; padding-left: 1rem; }
+.tl-week {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem;
+}
+.tl-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.tl-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+.tl-markets {
+  display: inline-flex; gap: 0.3rem; margin-top: 0.4rem; flex-wrap: wrap;
+}
+.tl-mkt {
+  padding: 0.15rem 0.5rem; background: rgba(200,168,78,0.08);
+  border-radius: 4px; font-size: 0.68rem; color: var(--gold);
+}
+
+/* DELIVERABLES TABLE */
+.dtable { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.dtable th {
+  font-family: 'Syne', sans-serif; font-size: 0.6rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);
+  text-align: left; padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid rgba(200,168,78,0.2); font-weight: 700;
+}
+.dtable td {
+  padding: 0.7rem 0.8rem; font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(245,245,240,0.85);
+}
+.dtable tr:last-child td { border-bottom: none; }
+.dqty { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--gold); }
+.dnote { font-size: 0.72rem; color: var(--text-muted); }
+.rate-tbd {
+  display: inline-block; padding: 0.2rem 0.6rem;
+  background: rgba(200,168,78,0.1); border: 1px solid rgba(200,168,78,0.2);
+  border-radius: 6px; font-family: 'Syne', sans-serif;
+  font-size: 0.65rem; font-weight: 700; color: var(--gold);
+}
+
+/* COUNTRY FILTER TABS */
+.filter-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;
+}
+.filter-tab {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem; background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 100px;
+  font-size: 0.78rem; cursor: pointer; transition: all 0.25s;
+  font-family: 'DM Sans', sans-serif; color: var(--text-muted);
+}
+.filter-tab:hover { border-color: rgba(200,168,78,0.3); color: var(--white); }
+.filter-tab.active {
+  border-color: var(--gold); background: rgba(200,168,78,0.12);
+  color: var(--gold); font-weight: 600;
+}
+.filter-tab .ft-flag { font-size: 1rem; }
+.filter-tab .ft-count {
+  font-size: 0.6rem; background: rgba(255,255,255,0.06);
+  padding: 0.15rem 0.4rem; border-radius: 100px; font-weight: 600;
+}
+.filter-tab.active .ft-count { background: rgba(200,168,78,0.2); color: var(--gold); }
+
+/* CREATOR GRID */
+.creators-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem; margin-bottom: 2rem;
+}
+
+.creator-card {
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px; padding: 1.4rem; cursor: pointer;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1); position: relative;
+  overflow: hidden;
+}
+.creator-card:hover {
+  border-color: rgba(200,168,78,0.35); transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.creator-card.active {
+  border-color: var(--gold); background: rgba(200,168,78,0.06);
+  box-shadow: 0 0 30px rgba(200,168,78,0.12);
+}
+.creator-card.mc-card { border-color: rgba(200,168,78,0.2); }
+.creator-card.mc-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--gradient-gold);
+}
+.card-top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+.card-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,168,78,0.2);background:var(--dark-surface);flex-shrink:0}
+.card-avatar-fallback{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(200,168,78,0.08);border:2px solid rgba(200,168,78,0.15);flex-shrink:0}
+.expanded-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(200,168,78,0.3);background:var(--dark-surface)}
+.expanded-avatar-fallback{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(200,168,78,0.08);border:3px solid rgba(200,168,78,0.3)}
+.card-flag { font-size: 1.8rem; }
+.card-info { flex: 1; }
+.card-name {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem;
+  line-height: 1.2; margin-bottom: 0.15rem;
+}
+.card-country { font-size: 0.72rem; color: var(--text-muted); }
+.card-role-badge {
+  font-family: 'Syne', sans-serif; font-size: 0.55rem; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.2rem 0.5rem; border-radius: 5px; white-space: nowrap;
+}
+.card-role-badge.mc-badge { background: rgba(200,168,78,0.2); color: var(--gold); }
+.card-role-badge.part-badge { background: rgba(0,255,136,0.1); color: var(--electric); }
+
+.card-stats {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+}
+.card-stat {
+  padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05); border-radius: 8px;
+  font-size: 0.7rem;
+}
+.card-stat .cs-val { color: var(--gold); font-weight: 700; }
+.card-stat .cs-plat { color: var(--text-muted); margin-left: 0.2rem; }
+
+.card-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.card-tag {
+  font-size: 0.6rem; padding: 0.15rem 0.45rem;
+  background: rgba(200,168,78,0.06); border: 1px solid rgba(200,168,78,0.1);
+  border-radius: 4px; color: var(--gold-light);
+}
+
+.card-review-indicator {
+  position: absolute; top: 0.8rem; right: 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* Card status styles */
+.creator-card.status-approved {
+  border-color: var(--electric) !important;
+  background: rgba(0,255,136,0.04);
+}
+.creator-card.status-rejected {
+  border-color: var(--red) !important;
+  background: rgba(255,59,59,0.03);
+  opacity: 0.5;
+}
+.creator-card.status-discuss {
+  border-color: var(--gold) !important;
+  background: rgba(200,168,78,0.05);
+}
+
+/* Hidden card for filter */
+.creator-card.hidden { display: none; }
+
+/* EXPANDED CARD OVERLAY */
+.creator-expanded-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.creator-expanded-overlay.visible { opacity: 1; pointer-events: auto; }
+.creator-expanded-card {
+  background: var(--card-bg); border: 1px solid rgba(200,168,78,0.2);
+  border-radius: 20px; padding: 2.5rem; max-width: 580px; width: 90%;
+  max-height: 85vh; overflow-y: auto; position: relative;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.creator-expanded-overlay.visible .creator-expanded-card { transform: scale(1) translateY(0); }
+.card-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.card-close:hover { background: rgba(255,59,59,0.1); border-color: var(--red); color: var(--red); }
+
+.expanded-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; }
+.expanded-flag { font-size: 2.5rem; }
+.expanded-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; }
+.expanded-meta { display: flex; gap: 0.8rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; }
+.expanded-stats { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.stat-pill {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; padding: 0.6rem 1rem; text-align: center;
+}
+.stat-pill .val { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); }
+.stat-pill .lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+.why-section { margin-bottom: 1.5rem; }
+.why-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.why-text { font-size: 0.88rem; line-height: 1.7; color: rgba(245,245,240,0.85); }
+.why-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.why-tag {
+  padding: 0.2rem 0.6rem; background: rgba(200,168,78,0.06);
+  border: 1px solid rgba(200,168,78,0.12); border-radius: 6px;
+  font-size: 0.68rem; color: var(--gold-light);
+}
+.expanded-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.profile-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  color: var(--white); text-decoration: none; font-size: 0.78rem; font-weight: 500;
+  transition: all 0.2s;
+}
+.profile-link:hover { background: rgba(200,168,78,0.1); border-color: rgba(200,168,78,0.3); }
+
+/* REVIEW ACTIONS */
+.review-actions {
+  display: flex; gap: 0.5rem; margin-top: 1.5rem;
+  padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.review-btn {
+  flex: 1; padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+  background: rgba(255,255,255,0.03); color: var(--text-muted);
+  font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s; text-align: center;
+}
+.review-btn:hover { transform: translateY(-1px); }
+.review-btn.approve:hover, .review-btn.approve.selected { background: rgba(0,255,136,0.12); border-color: var(--electric); color: var(--electric); }
+.review-btn.reject:hover, .review-btn.reject.selected { background: rgba(255,59,59,0.12); border-color: var(--red); color: var(--red); }
+.review-btn.discuss:hover, .review-btn.discuss.selected { background: rgba(200,168,78,0.12); border-color: var(--gold); color: var(--gold); }
+.review-btn.selected { transform: scale(1.02); font-weight: 800; }
+
+.client-notes-area { margin-top: 1rem; }
+.client-notes-area label {
+  font-family: 'Syne', sans-serif; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+  display: block; margin-bottom: 0.4rem;
+}
+.client-notes-area textarea {
+  width: 100%; min-height: 60px; padding: 0.7rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; color: var(--white); font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; resize: vertical; outline: none;
+}
+.client-notes-area textarea:focus { border-color: rgba(200,168,78,0.4); }
+.client-notes-area textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+/* COUNTRY GRID */
+.country-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem;
+}
+.country-card {
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px; padding: 1.2rem; text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.country-card:hover { transform: translateY(-3px); border-color: rgba(200,168,78,0.3); }
+.country-flag { font-size: 2rem; margin-bottom: 0.4rem; }
+.country-name { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; }
+.country-count { font-size: 0.7rem; color: var(--text-muted); }
+.country-status { font-size: 0.65rem; margin-top: 0.3rem; font-weight: 600; }
+
+/* REVIEW SUMMARY */
+.review-summary {
+  background: var(--card-bg); border: 1px solid rgba(200,168,78,0.15);
+  border-radius: 16px; padding: 2rem; margin-top: 3rem;
+}
+.review-summary-title {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+  margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.review-stats-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.review-stat-box {
+  flex: 1; min-width: 70px; text-align: center; padding: 0.8rem;
+  border-radius: 10px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.review-stat-box .num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; }
+.review-stat-box .lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+.review-stat-box.approved .num { color: var(--electric); }
+.review-stat-box.rejected .num { color: var(--red); }
+.review-stat-box.discuss .num { color: var(--gold); }
+.review-stat-box.pending .num { color: var(--text-muted); }
+
+.country-request-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-top: 1rem;
+}
+.country-request-row {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 1rem; background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; font-size: 0.8rem;
+}
+.country-request-row .cflag { font-size: 1.2rem; }
+.country-request-row .cname { font-weight: 600; flex: 1; }
+.country-request-row .ccount { font-size: 0.7rem; color: var(--text-muted); min-width: 50px; text-align: right; }
+.request-more-btn {
+  padding: 0.3rem 0.6rem; background: rgba(200,168,78,0.08);
+  border: 1px solid rgba(200,168,78,0.2); border-radius: 6px;
+  color: var(--gold); font-size: 0.65rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; font-family: 'Syne', sans-serif;
+}
+.request-more-btn:hover { background: rgba(200,168,78,0.15); border-color: var(--gold); }
+.request-more-btn.requested { background: rgba(200,168,78,0.2); border-color: var(--gold); color: var(--gold-light); }
+
+.export-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.5rem; background: var(--gradient-gold); color: var(--black);
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.82rem;
+  letter-spacing: 0.04em; border: none; border-radius: 10px;
+  cursor: pointer; margin-top: 1.2rem; transition: transform 0.2s, box-shadow 0.2s;
+}
+.export-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,168,78,0.25); }
+.submit-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2rem;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;letter-spacing:0.04em;border:none;border-radius:10px;cursor:pointer;margin-left:0.8rem;background:linear-gradient(135deg,#c8a84e 0%,#e8d48e 50%,#c8a84e 100%);color:var(--black);transition:transform 0.2s,box-shadow 0.2s}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,168,78,0.3)}
+.submit-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.agency-panel{background:var(--card-bg);border:1px solid rgba(0,255,136,0.15);border-radius:16px;padding:2rem;margin-top:2rem}
+.agency-panel-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:0.5rem;color:#00ff88}
+.agency-panel-sub{font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem}
+.submitted-list{display:flex;flex-direction:column;gap:0.6rem}
+.submitted-row{display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:10px;font-size:0.85rem;flex-wrap:wrap}
+.submitted-row .sr-flag{font-size:1.2rem}.submitted-row .sr-name{font-weight:600;min-width:160px}.submitted-row .sr-country{color:var(--text-muted);font-size:0.75rem;min-width:80px}
+.submitted-row .sr-status{font-size:0.68rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;letter-spacing:0.05em;text-transform:uppercase}
+.sr-status.st-approved{background:rgba(0,255,136,0.12);color:#00ff88}.sr-status.st-rejected{background:rgba(255,59,59,0.1);color:#ff3b3b}.sr-status.st-discuss{background:rgba(200,168,78,0.12);color:var(--gold)}
+.sr-note{font-size:0.72rem;color:var(--text-muted);font-style:italic;width:100%;padding-left:2.4rem}
+.submitted-time{font-size:0.72rem;color:var(--text-muted);margin-top:1.2rem;text-align:right;font-style:italic}
+
+/* BUDGET */
+.budget-bar {
+  background: var(--card-bg); border-radius: 16px; padding: 2.5rem;
+  border: 1px solid rgba(255,255,255,0.05); margin-bottom: 2rem;
+}
+.budget-range {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--gold); margin-bottom: 0.5rem;
+}
+.budget-split {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;
+}
+.budget-item {
+  padding: 1.2rem; background: rgba(255,255,255,0.02); border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.budget-pct { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); }
+.budget-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 0.8rem 1.5rem; background: var(--card-bg);
+  border: 1px solid rgba(200,168,78,0.3); border-radius: 12px;
+  font-size: 0.85rem; font-weight: 500; color: var(--white);
+  z-index: 300; opacity: 0; transition: all 0.4s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.creators-hint {
+  text-align: center; font-size: 0.78rem; color: var(--text-muted);
+  margin-bottom: 2.5rem; font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .container { padding: 0 1.2rem; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 3rem; }
+  .budget-split { grid-template-columns: 1fr; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">OKX MENA</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#concept">Concept</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#deliverables">Deliverables</a>
+    <a href="#creators">Creators</a>
+    <a href="#budget">Budget</a>
+  </div>
+  <div class="sync-status" id="syncStatus">⏳ Connecting...</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Campaign Strategy &mdash; World Cup 2026</div>
+  <div class="hero-title">CHEER YOUR<br>NATION LIVE</div>
+  <div class="hero-sub">OKX MENA &times; 8 Markets</div>
+  <div class="hero-flags">
+    <div class="hero-flag"><span class="hf">🇸🇦</span> Saudi Arabia</div>
+    <div class="hero-flag"><span class="hf">🇦🇪</span> UAE</div>
+    <div class="hero-flag"><span class="hf">🇪🇬</span> Egypt</div>
+    <div class="hero-flag"><span class="hf">🇲🇦</span> Morocco</div>
+    <div class="hero-flag"><span class="hf">🇯🇴</span> Jordan</div>
+    <div class="hero-flag"><span class="hf">🇹🇳</span> Tunisia</div>
+    <div class="hero-flag"><span class="hf">🇮🇶</span> Iraq</div>
+    <div class="hero-flag"><span class="hf">🇶🇦</span> Qatar</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">Weeks</div></div>
+    <div class="hero-stat"><div class="num">16</div><div class="lbl">Episodes</div></div>
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">Markets</div></div>
+    <div class="hero-stat"><div class="num">24</div><div class="lbl">Creators</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-tag">01 &mdash; Campaign Overview</div>
+  <div class="section-title">The Big Idea</div>
+  <div class="section-desc">An 8-week TikTok Live fawazeer competition across 8 MENA markets. One MC Host anchors every episode from Dubai. Participants represent their nations. Fans sign up on OKX, trade, and qualify to win an all-expenses-paid VIP football hospitality trip to North America.</div>
+  <div class="card card-gold" style="padding:2rem">
+    <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.8rem">🏆 The Prize</div>
+    <div style="font-size:0.92rem;line-height:1.7;color:rgba(245,245,240,0.85)">Premium seating &amp; exclusive lounge access &bull; Flights &amp; accommodation included &bull; Official merchandise &bull; Entry: trade and qualify on OKX</div>
+  </div>
+</section>
+
+<!-- CREATIVE CONCEPT -->
+<section id="concept">
+  <div class="section-tag">02 &mdash; Creative Concept</div>
+  <div class="section-title">TikTok Live Fawazeer</div>
+  <div class="section-desc">A modern twist on the beloved Ramadan fawazeer format — football-themed riddles, live challenges, and country-vs-country energy. Each episode features the MC Host running the show with rotating Participant guests.</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;">
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:0.5rem">🎙️</div><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.3rem">MC Host</div><div style="font-size:0.82rem;color:var(--text-muted)">1 creator anchoring all 16 episodes from Dubai. The face of the show.</div></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:0.5rem">⚽</div><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.3rem">6 Participants</div><div style="font-size:0.82rem;color:var(--text-muted)">Rotating guests representing 7 nations. Football riddles, live challenges, community energy.</div></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:0.5rem">🏅</div><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.3rem">VIP Prize</div><div style="font-size:0.82rem;color:var(--text-muted)">All-expenses-paid trip to North America. Trade on OKX to qualify.</div></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-tag">03 &mdash; 8-Week Timeline</div>
+  <div class="section-title">Episode Schedule</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-week">Week 0 &mdash; Pre-Launch</div><div class="tl-title">Tease &amp; Build Hype</div><div class="tl-desc">MC reveal, tease content, OKX campaign landing page live. Creators begin teaser stories.</div><div class="tl-markets"><span class="tl-mkt">🇸🇦</span><span class="tl-mkt">🇦🇪</span><span class="tl-mkt">🇪🇬</span><span class="tl-mkt">🇲🇦</span><span class="tl-mkt">🇯🇴</span><span class="tl-mkt">🇹🇳</span><span class="tl-mkt">🇮🇶</span><span class="tl-mkt">🇶🇦</span></div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-week">Weeks 1–2 &mdash; Launch</div><div class="tl-title">Episodes 1–4</div><div class="tl-desc">First wave with core markets. Establish format, drive initial sign-ups.</div><div class="tl-markets"><span class="tl-mkt">🇸🇦 KSA</span><span class="tl-mkt">🇪🇬 Egypt</span><span class="tl-mkt">🇲🇦 Morocco</span><span class="tl-mkt">🇹🇳 Tunisia</span></div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-week">Weeks 3–4 &mdash; Expand</div><div class="tl-title">Episodes 5–8</div><div class="tl-desc">Bring in new markets. Cross-country rivalries begin.</div><div class="tl-markets"><span class="tl-mkt">🇶🇦 Qatar</span><span class="tl-mkt">🇯🇴 Jordan</span><span class="tl-mkt">🇦🇪 UAE</span><span class="tl-mkt">🇮🇶 Iraq</span></div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-week">Weeks 5–6 &mdash; Momentum</div><div class="tl-title">Episodes 9–12</div><div class="tl-desc">Peak engagement. Cross-market rivalries and surprise guests.</div><div class="tl-markets"><span class="tl-mkt">All 8 Markets</span></div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-week">Weeks 7–8 &mdash; Grand Finale</div><div class="tl-title">Episodes 13–16</div><div class="tl-desc">Prize reveal, winner announcement, final recap content blitz.</div><div class="tl-markets"><span class="tl-mkt">All 8 Markets</span></div></div></div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section id="deliverables">
+  <div class="section-tag">04 &mdash; Exact Deliverables</div>
+  <div class="section-title">Two Roles. Clear Expectations.</div>
+
+  <div class="card card-gold" style="position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-gold)"></div>
+    <div style="display:inline-block;font-family:'Syne',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:6px;background:rgba(200,168,78,0.15);color:var(--gold);border:1px solid rgba(200,168,78,0.3);margin-bottom:1rem;font-weight:700">MC Host &mdash; 1 Creator</div>
+    <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:0.5rem">The face of the show. Anchors all 16 episodes.</div>
+    <div style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.25rem 0.7rem;background:rgba(255,59,59,0.08);border:1px solid rgba(255,59,59,0.2);border-radius:6px;font-size:0.72rem;color:var(--red);font-weight:600;margin-bottom:1rem">📍 Must be based in Dubai</div>
+    <table class="dtable">
+      <thead><tr><th>Deliverable</th><th>Quantity</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>IG / TikTok Stories</td><td><span class="dqty">36</span> <span class="dnote">/ 8 weeks</span></td><td>Pre, during &amp; post each episode + recap</td></tr>
+        <tr><td>Instagram Videos</td><td><span class="dqty">8</span> <span class="dnote">/ 8 weeks</span></td><td>Recap + blooper reels</td></tr>
+        <tr><td>TikTok Live</td><td><span class="dqty">8 hrs</span> <span class="dnote">total</span></td><td>16 episodes &times; ~30 min (bi-weekly)</td></tr>
+        <tr><td>Training Sessions</td><td><span class="dqty">2</span></td><td>Pre-campaign + mid-campaign check-in</td></tr>
+        <tr><td>Platforms</td><td colspan="2">All (TikTok, Instagram, YouTube, Snapchat)</td></tr>
+        <tr><td>Rate</td><td colspan="2"><span class="rate-tbd">TBD — Collect from creator</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div style="display:inline-block;font-family:'Syne',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:6px;background:rgba(0,255,136,0.08);color:var(--electric);border:1px solid rgba(0,255,136,0.2);margin-bottom:1rem;font-weight:700">Participant &mdash; 6 Creators</div>
+    <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:1rem">Rotating guests representing their country on individual episodes.</div>
+    <table class="dtable">
+      <thead><tr><th>Deliverable</th><th>Quantity</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>IG / TikTok Stories</td><td><span class="dqty">5</span> <span class="dnote">total</span></td><td>2 pre + 1 during + 1 recap + 1 promo</td></tr>
+        <tr><td>Instagram Reel</td><td><span class="dqty">1</span></td><td>Recap reel with OKX campaign link</td></tr>
+        <tr><td>TikTok Live</td><td><span class="dqty">1 hr</span></td><td>Virtual live participation in assigned episode</td></tr>
+        <tr><td>Platforms</td><td colspan="2">All (TikTok, Instagram, YouTube, Snapchat)</td></tr>
+        <tr><td>Rate</td><td colspan="2"><span class="rate-tbd">TBD — Collect from creator</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CREATORS -->
+<section id="creators">
+  <div class="section-tag">05 &mdash; Creator Roster (24 Shortlisted)</div>
+  <div class="section-title">Click to Review Each Creator</div>
+  <div class="section-desc">24 shortlisted creators across 8 markets. Click any card to see their profile, stats, and social links. Approve, reject, or mark for discussion.</div>
+
+  <div class="filter-tabs" id="filterTabs"></div>
+
+  <div class="creators-grid" id="creatorsGrid"></div>
+
+  <div class="country-grid" id="countryGrid"></div>
+
+  <div class="review-summary" id="reviewSummary">
+    <div class="review-summary-title">📋 Client Review Dashboard</div>
+    <div class="review-stats-row">
+      <div class="review-stat-box approved"><div class="num" id="statApproved">0</div><div class="lbl">Approved</div></div>
+      <div class="review-stat-box rejected"><div class="num" id="statRejected">0</div><div class="lbl">Rejected</div></div>
+      <div class="review-stat-box discuss"><div class="num" id="statDiscuss">0</div><div class="lbl">Discussion</div></div>
+      <div class="review-stat-box pending"><div class="num" id="statPending">24</div><div class="lbl">Pending</div></div>
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">Request More Creators by Country</div>
+    <div class="country-request-grid" id="countryRequestGrid"></div>
+    <button class="export-btn" onclick="exportReview()">📄 Export Review Summary</button>
+    <button class="submit-btn" id="submitBtn" onclick="submitReview()">🚀 Submit Final Selections</button>
+  </div>
+
+  <!-- AGENCY PANEL — shows submitted selections from Supabase -->
+  <div class="agency-panel" id="agencyPanel" style="display:none">
+    <div class="agency-panel-title">✅ Client Selections Received</div>
+    <div class="agency-panel-sub">These are the creators selected by the client. Ready for outreach.</div>
+    <div class="submitted-list" id="submittedList"></div>
+    <div class="submitted-time" id="submittedTime"></div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section id="budget">
+  <div class="section-tag">06 &mdash; Budget</div>
+  <div class="section-title">Investment Breakdown</div>
+  <div class="budget-bar">
+    <div class="budget-range">$100,000 — $140,000</div>
+    <div style="font-size:0.85rem;color:var(--text-muted)">Total campaign budget across 8 markets, 1 MC + 6 Participants</div>
+    <div class="budget-split">
+      <div class="budget-item"><div class="budget-pct">50–55%</div><div class="budget-label">MC Host + Top-Tier Fees</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem">$50K–$77K &bull; Anchors all 16 episodes</div></div>
+      <div class="budget-item"><div class="budget-pct">35–40%</div><div class="budget-label">6 Participant Creators</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem">$35K–$56K &bull; Rotating across 8 markets</div></div>
+      <div class="budget-item"><div class="budget-pct">5–10%</div><div class="budget-label">Production / Contingency</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem">$5K–$14K &bull; Equipment, bonuses</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- EXPANDED CARD OVERLAY -->
+<div class="creator-expanded-overlay" id="creatorOverlay">
+  <div class="creator-expanded-card" id="creatorCard">
+    <button class="card-close" onclick="closeCard()">✕</button>
+    <div id="cardContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const reviewState = {};
+const clientNotes = {};
+const countryRequests = {};
+let saveTimer = null;
+
+// ====== SUPABASE CONFIG ======
+// Replace these with your Supabase project URL and anon key
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+let supabase = null;
+let dbReady = false;
+
+async function initSupabase() {
+  try {
+    if (typeof window.supabase === 'undefined' || !SUPABASE_URL.startsWith('http')) {
+      setSyncStatus('offline'); return;
+    }
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Create table if not exists via RPC or just try to read
+    dbReady = true;
+    setSyncStatus('saved');
+    await loadFromDB();
+  } catch(e) { console.warn('Supabase init failed, running in local mode', e); setSyncStatus('offline'); }
+}
+
+function setSyncStatus(status) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  const map = {saved:['✅ Saved','saved'],saving:['⏳ Saving...','saving'],offline:['💾 Local Mode','offline'],connecting:['⏳ Connecting...','connecting']};
+  const [text,cls] = map[status] || ['',''];
+  el.textContent = text; el.className = 'sync-status ' + cls;
+}
+
+async function loadFromDB() {
+  if (!dbReady) return;
+  try {
+    const {data,error} = await supabase.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
+    if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
+    if (data) {
+      if (data.decisions) Object.assign(reviewState, data.decisions);
+      if (data.notes) Object.assign(clientNotes, data.notes);
+      if (data.country_requests) Object.assign(countryRequests, data.country_requests);
+      creators.forEach(c => { if(reviewState[c.id]) updateCardStatus(c.id); });
+      updateReviewStats(); renderCountryGrid(); renderCountryRequests();
+      if (data.submitted_at) showAgencyPanel(data);
+    }
+    setSyncStatus('saved');
+  } catch(e) { console.warn('Load failed', e); setSyncStatus('offline'); }
+}
+
+async function saveToDB() {
+  if (!dbReady) return;
+  setSyncStatus('saving');
+  try {
+    const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, updated_at:new Date().toISOString() };
+    const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+    if (error) throw error;
+    setSyncStatus('saved');
+  } catch(e) { console.warn('Save failed', e); setSyncStatus('offline'); }
+}
+
+function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveToDB, 1200); }
+
+async function submitReview() {
+  const vals = Object.values(reviewState);
+  const approved = creators.filter(c => reviewState[c.id] === 'approved');
+  if (approved.length === 0) { showToast('⚠️ Please approve at least one creator first'); return; }
+  const msg = `Submit final selections?\n\n✅ ${approved.length} Approved\n❌ ${vals.filter(v=>v==='rejected').length} Rejected\n💬 ${vals.filter(v=>v==='discuss').length} Discussion\n⏳ ${creators.length - vals.length} Pending\n\nThis will notify the agency team to begin outreach.`;
+  if (!confirm(msg)) return;
+  if (dbReady) {
+    try {
+      const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, submitted_at:new Date().toISOString(), updated_at:new Date().toISOString() };
+      const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+      if (error) throw error;
+      showToast('🚀 Selections submitted! Agency team notified to begin outreach.');
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = '✅ Submitted';
+      showAgencyPanel(payload);
+      setSyncStatus('saved');
+    } catch(e) { showToast('⚠️ Submit failed — ' + e.message); }
+  } else {
+    showToast('🚀 Selections recorded! (Local mode — export summary to share)');
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = '✅ Submitted';
+    showAgencyPanel({decisions:reviewState, notes:clientNotes, submitted_at:new Date().toISOString()});
+  }
+}
+
+function showAgencyPanel(data) {
+  const panel = document.getElementById('agencyPanel');
+  const list = document.getElementById('submittedList');
+  const timeEl = document.getElementById('submittedTime');
+  const decisions = data.decisions || {};
+  const notes = data.notes || {};
+  // Show all reviewed creators grouped by status
+  const statusOrder = ['approved','discuss','rejected'];
+  const statusIcons = {approved:'✅',rejected:'❌',discuss:'💬'};
+  const statusLabels = {approved:'APPROVED',rejected:'REJECTED',discuss:'DISCUSS'};
+  let html = '';
+  statusOrder.forEach(st => {
+    creators.filter(c => decisions[c.id] === st).forEach(c => {
+      html += `<div class="submitted-row">
+        <span class="sr-flag">${c.flag}</span>
+        <span class="sr-name">${c.name}</span>
+        <span class="sr-country">${c.country}</span>
+        <span class="sr-status st-${st}">${statusIcons[st]} ${statusLabels[st]}</span>
+        ${notes[c.id] ? `<div class="sr-note">📝 ${notes[c.id]}</div>` : ''}
+      </div>`;
+    });
+  });
+  if (!html) html = '<div style="color:var(--text-muted);font-size:0.85rem">No selections yet</div>';
+  list.innerHTML = html;
+  if (data.submitted_at) timeEl.textContent = `Submitted: ${new Date(data.submitted_at).toLocaleString()}`;
+  panel.style.display = 'block';
+}
+
+const countryData = [
+  {code:'KSA',name:'Saudi Arabia',flag:'🇸🇦'},
+  {code:'UAE',name:'UAE',flag:'🇦🇪'},
+  {code:'Egypt',name:'Egypt',flag:'🇪🇬'},
+  {code:'Morocco',name:'Morocco',flag:'🇲🇦'},
+  {code:'Jordan',name:'Jordan',flag:'🇯🇴'},
+  {code:'Tunisia',name:'Tunisia',flag:'🇹🇳'},
+  {code:'Iraq',name:'Iraq',flag:'🇮🇶'},
+  {code:'Qatar',name:'Qatar',flag:'🇶🇦'}
+];
+
+const creators = [
+  // === KSA (5) ===
+  {id:'hemex',name:'Hemex (Mohammed Aldhurafi)',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Celebrity',
+    igHandle:'hemex_77',
+    platforms:[{name:'Instagram',followers:'2.6M',url:'https://www.instagram.com/hemex_77/'},{name:'YouTube',followers:'1.53M',url:'https://www.youtube.com/@hemex'}],
+    why:'Multi-platform football powerhouse (2.6M IG + 1.53M YT). Celebrity tier with YouTube giving strong recap distribution. High-energy content fits fawazeer format.',
+    tags:['2.6M IG','1.53M YT','Celebrity','Multi-Platform']},
+  {id:'abadi-zahrani',name:'Abadi Al Zahrani',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',
+    platforms:[{name:'TikTok',followers:'355K',url:'https://www.tiktok.com/@iabadiz'}],
+    why:'Rising 355K TikTok creator with grassroots energy. Higher engagement rates — ideal for driving real sign-ups.',
+    tags:['355K TikTok','Rising Creator','High Engagement','Budget Friendly']},
+  {id:'abdullah-sulaiman',name:'Abdullah Sulaiman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',
+    igHandle:'hrm_79',
+    platforms:[{name:'Instagram',followers:'314K',url:'https://www.instagram.com/hrm_79'}],
+    why:'314K IG football creator from KSA. Responded with competitive rate — strong campaign readiness.',
+    tags:['314K IG','KSA Football','Responded','Mid-Tier']},
+  {id:'bassam-soliman',name:'Bassam Soliman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',
+    igHandle:'bassem_soliman7',
+    platforms:[{name:'Instagram',followers:'347K',url:'https://www.instagram.com/bassem_soliman7'}],
+    why:'347K IG football creator. Quick response and competitive pricing signals strong brand fit and availability.',
+    tags:['347K IG','KSA Football','Competitive Rate']},
+  {id:'majed-baqadim',name:'Majed Baqadim',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',
+    igHandle:'majed.mb7',
+    platforms:[{name:'Instagram',followers:'141K',url:'https://www.instagram.com/majed.mb7/'}],
+    why:'141K football creator from Saudi. Mid-tier with authentic community and solid engagement.',
+    tags:['141K IG','Mid-Tier','Authentic Community']},
+
+  // === UAE (2) ===
+  {id:'khaled-abbassi',name:'Khaled Abbassi',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mega',
+    igHandle:'_ftg',
+    platforms:[{name:'YouTube',followers:'2.48M',url:'https://www.youtube.com/@WithKhaled'},{name:'TikTok',followers:'2.3M',url:'https://www.tiktok.com/@withkhaled'},{name:'Instagram',followers:'400K',url:'https://www.instagram.com/_ftg/'}],
+    why:'Triple-platform football creator (2.48M YT + 2.3M TT + 400K IG). Dubai-based — strong MC Host candidate with high-energy presentation style.',
+    tags:['2.48M YT','2.3M TikTok','Dubai-Based','MC Host Candidate']},
+  {id:'saif-shawaf',name:'Saif Shawaf',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Lifestyle',role:'Participant',tier:'—',
+    platforms:[{name:'TikTok',followers:'—',url:'https://www.tiktok.com/@saifshawaf'}],
+    why:'UAE lifestyle creator. Broadens audience beyond core football fans. Responded and available for campaign.',
+    tags:['UAE','Lifestyle','TikTok','Audience Diversifier']},
+
+  // === Egypt (2) ===
+  {id:'alicia',name:'Ali Iannacone',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',
+    igHandle:'ali.iannacone',
+    platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/ali.iannacone'}],
+    why:'1.2M IG. TikTok Awards Best Sports Content Creator. TV presenter on ONTIME SPORTS Capitano Egypt. Multilingual (FR/EN/IT/AR). Father is Al Ahly FC goalkeeper trainer.',
+    tags:['1.2M IG','TikTok Awards','TV Presenter','Multilingual']},
+  {id:'mamdouh',name:'Mamdouh Nasr Allah',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',
+    igHandle:'mamdouh.nasrallah',
+    platforms:[{name:'TikTok',followers:'954K',url:'https://www.tiktok.com/@mamdouh_nasr_allah'},{name:'YouTube',followers:'1.94M',url:'https://www.youtube.com/@mamdouhnasrallah'},{name:'X (Twitter)',followers:'573K',url:'https://x.com/MamdouhNasrAllh'}],
+    why:'Mega creator — 954K TikTok, 1.94M YouTube, 573K X, 226K Threads. Football commentator covering La Liga and Champions League. Massive cross-platform reach.',
+    tags:['1.94M YouTube','954K TikTok','573K X','Football Commentator']},
+
+  // === Morocco (1) ===
+  {id:'oussama',name:'Oussama Özil',flag:'🇲🇦',country:'Morocco',countryCode:'Morocco',category:'Football',role:'Participant',tier:'Macro',
+    igHandle:'oussama_ozil',
+    platforms:[{name:'TikTok',followers:'440K+',url:'https://www.tiktok.com/@oussama_ozil'},{name:'Instagram',followers:'200K+',url:'https://www.instagram.com/oussama_ozil'}],
+    why:'440K+ TikTok + 200K+ IG Moroccan football creator. Sole Morocco rep — essential market coverage.',
+    tags:['440K+ TikTok','200K+ IG','Morocco Rep','Football Content']},
+
+  // === Jordan (6) ===
+  {id:'khaled-raed',name:'Khaled Raed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Entertainment',role:'Participant',tier:'Macro',
+    igHandle:'khaledraedd1',
+    platforms:[{name:'Instagram',followers:'267K',url:'https://www.instagram.com/khaledraedd1'},{name:'TikTok',followers:'306K',url:'https://www.tiktok.com/@khaledraedd1'}],
+    why:'267K IG + 306K TikTok entertainment creator from Jordan. Dual-platform presence with strong engagement.',
+    tags:['267K IG','306K TikTok','Entertainment','Dual-Platform']},
+  {id:'myfitmaya',name:'MyFitMaya',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Sports / Lifestyle',role:'Participant',tier:'Macro',
+    igHandle:'myfitmaya',
+    platforms:[{name:'Instagram',followers:'184K',url:'https://www.instagram.com/myfitmaya'}],
+    why:'184K IG sports/lifestyle creator from Jordan. Female voice diversifies roster beyond male football fans.',
+    tags:['184K IG','Female Voice','Sports/Lifestyle','Gender Diversity']},
+  {id:'ali-abusrwal',name:'Ali Abu Srwal',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football / Gaming',role:'Participant',tier:'Mega',
+    igHandle:'abu_srwal',
+    platforms:[{name:'Instagram',followers:'3M',url:'https://www.instagram.com/abu_srwal/'},{name:'YouTube',followers:'4.14M',url:'https://www.youtube.com/@abusrwal'}],
+    why:'3M IG + 4.14M YT — Jordan\'s biggest football/gaming creator. La Liga ambassador, EA Sports FC Mobile ambassador. Gaming bridges football and esports audiences.',
+    tags:['3M IG','4.14M YouTube','La Liga Ambassador','Gaming + Football']},
+  {id:'hamza-samara',name:'Hamza Samara',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle',role:'Participant',tier:'Mega',
+    igHandle:'hhsamara',
+    platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/hhsamara'}],
+    why:'1.2M IG lifestyle creator from Jordan. Fashion/lifestyle angle diversifies roster. Strong visual aesthetic.',
+    tags:['1.2M IG','Lifestyle','Fashion','Jordan']},
+  {id:'mahmood-fahmawi',name:'Mahmood Fahmawi',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle / Entertainment',role:'Potential Host',tier:'Mega',
+    igHandle:'fa7mawii_',
+    platforms:[{name:'Instagram',followers:'303K',url:'https://www.instagram.com/fa7mawii_'}],
+    why:'303K IG Jordanian creator. Strong on-camera presence makes him a solid Potential Host candidate.',
+    tags:['303K IG','Potential Host','On-Camera Presence']},
+  {id:'bu-rashed',name:'Bu Rashed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle / Entertainment',role:'Potential Host',tier:'Mega',
+    igHandle:'burashed.10',
+    platforms:[{name:'Instagram',followers:'602K',url:'https://www.instagram.com/burashed.10'}],
+    why:'602K IG Jordanian football/entertainment creator. Strong presenter energy — Potential Host candidate.',
+    tags:['602K IG','Potential Host','Strong Presenter']},
+
+  // === Tunisia (3) ===
+  {id:'douha',name:'Douha Laribi',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Celebrity',
+    platforms:[{name:'TikTok',followers:'18.8M',url:'https://www.tiktok.com/@douhalaribi'}],
+    why:'18.8M TikTok — biggest creator in the entire roster. TikTok MENA "Best Audience" award. Tunisia\'s #1 female influencer. Massive cross-over reach.',
+    tags:['18.8M TikTok','Tunisia #1','TikTok MENA Award','Celebrity']},
+  {id:'nawres',name:'Nawres Briki',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Mega',
+    platforms:[{name:'TikTok',followers:'1M+',url:'https://www.tiktok.com/@nawres_briki'}],
+    why:'1M+ TikTok entertainment creator from Tunisia. Young audience widens OKX funnel beyond male football fans.',
+    tags:['1M+ TikTok','Tunisia','Entertainment','Young Audience']},
+  {id:'rafik',name:'Rafik Aouay',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Macro',
+    platforms:[{name:'TikTok',followers:'500K+',url:'https://www.tiktok.com/@rafik_aouay'}],
+    why:'500K+ TikTok entertainment creator from Tunisia. Third Tunisia rep for solid market depth.',
+    tags:['500K+ TikTok','Tunisia','Entertainment']},
+
+  // === Iraq (4) ===
+  {id:'farid',name:'Farid Kenzo',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Lifestyle / Entertainment',role:'Participant',tier:'Mega',
+    igHandle:'farid__kenzo8',
+    platforms:[{name:'Instagram',followers:'7.2M',url:'https://www.instagram.com/farid__kenzo8'}],
+    why:'7.2M IG — biggest Iraqi creator. Essential market coverage. Entertainment style brings massive crossover reach.',
+    tags:['7.2M IG','Iraq #1','Mega','Entertainment']},
+  {id:'ali-alabood',name:'Ali Al-Abood',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',
+    igHandle:'chrisitox',
+    platforms:[{name:'Instagram',followers:'125K',url:'https://www.instagram.com/chrisitox/'}],
+    why:'125K Iraqi football creator. Authentic Iraq football community reach.',
+    tags:['125K IG','Iraq Football','Authentic']},
+  {id:'mohammad-enad',name:'Mohammad Enad',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Mega',
+    platforms:[{name:'TikTok',followers:'2M',url:'https://www.tiktok.com/@mohammad10enad'}],
+    why:'2M TikTok — biggest Iraqi football creator on the platform. Mega tier with massive reach across Iraq and MENA.',
+    tags:['2M TikTok','Iraq Football','Mega Tier']},
+  {id:'abbas-biso',name:'Abbas Biso',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',
+    platforms:[{name:'YouTube',followers:'686K',url:'https://www.youtube.com/@Ab55as'}],
+    why:'686K YouTube football creator from Iraq. YouTube distribution ideal for recap content and highlights.',
+    tags:['686K YouTube','Iraq Football','Recap Distribution']},
+
+  // === Qatar (1) ===
+  {id:'khalid-alfadhli',name:'Khalid Alfadhli',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Micro',
+    igHandle:'khalidalfadli',
+    platforms:[{name:'Instagram',followers:'60.5K',url:'https://www.instagram.com/khalidalfadli/'}],
+    why:'60.5K Qatari football creator. Micro tier with tight-knit engaged community. Authentic Qatar market reach.',
+    tags:['60.5K IG','Qatar Rep','Engaged Community']}
+];
+
+let activeFilter = 'all';
+
+function getAvatar(c, size) {
+  const cls = size==='lg' ? 'expanded-avatar' : 'card-avatar';
+  const fbCls = size==='lg' ? 'expanded-avatar-fallback' : 'card-avatar-fallback';
+  if (c.igHandle) return `<img class="${cls}" src="https://unavatar.io/instagram/${c.igHandle}" alt="${c.name}" onerror="this.outerHTML='<div class=\\'${fbCls}\\'>${c.flag}</div>'">`;
+  return `<div class="${fbCls}">${c.flag}</div>`;
+}
+
+function buildCard(c) {
+  const isMC = c.role === 'MC Host' || c.role === 'Potential Host';
+  const statusClass = reviewState[c.id] ? `status-${reviewState[c.id]}` : '';
+  const statusIcon = {approved:'✅',rejected:'❌',discuss:'💬'}[reviewState[c.id]] || '';
+  const roleLabel = c.role === 'Potential Host' ? '🎙️ POTENTIAL HOST' : (c.role === 'MC Host' ? '🎙️ MC HOST' : '⚽ PARTICIPANT');
+  const roleBadge = `<span class="card-role-badge ${isMC ? 'mc-badge' : 'part-badge'}">${roleLabel}</span>`;
+  const statsHtml = c.platforms.map(p => `<div class="card-stat"><span class="cs-val">${p.followers}</span><span class="cs-plat">${p.name}</span></div>`).join('');
+  const tagsHtml = c.tags.slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('');
+  return `<div class="creator-card ${isMC?'mc-card':''} ${statusClass}" data-id="${c.id}" data-country="${c.countryCode}" onclick="openCard('${c.id}')">
+    ${statusIcon ? `<div class="card-review-indicator">${statusIcon}</div>` : ''}
+    <div class="card-top">
+      ${getAvatar(c)}
+      <div class="card-info">
+        <div class="card-name">${c.name}</div>
+        <div class="card-country">${c.flag} ${c.country} · ${c.category}</div>
+      </div>
+      ${roleBadge}
+    </div>
+    <div class="card-stats">${statsHtml}</div>
+    <div class="card-tags">${tagsHtml}</div>
+  </div>`;
+}
+
+function renderGrid() {
+  document.getElementById('creatorsGrid').innerHTML = creators.map(buildCard).join('');
+  applyFilter();
+}
+
+function renderFilterTabs() {
+  const counts = {all: creators.length};
+  countryData.forEach(cd => { counts[cd.code] = creators.filter(c => c.countryCode === cd.code).length; });
+  let html = `<div class="filter-tab active" onclick="setFilter('all',this)"><span>All</span><span class="ft-count">${counts.all}</span></div>`;
+  countryData.forEach(cd => {
+    html += `<div class="filter-tab" onclick="setFilter('${cd.code}',this)"><span class="ft-flag">${cd.flag}</span><span>${cd.name}</span><span class="ft-count">${counts[cd.code]}</span></div>`;
+  });
+  document.getElementById('filterTabs').innerHTML = html;
+}
+
+function setFilter(code, tab) {
+  activeFilter = code;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  applyFilter();
+}
+
+function applyFilter() {
+  document.querySelectorAll('.creator-card').forEach(card => {
+    if (activeFilter === 'all' || card.dataset.country === activeFilter) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+function updateCardStatus(id) {
+  document.querySelectorAll(`.creator-card[data-id="${id}"]`).forEach(card => {
+    card.classList.remove('status-approved','status-rejected','status-discuss');
+    if (reviewState[id]) card.classList.add(`status-${reviewState[id]}`);
+    const indicator = card.querySelector('.card-review-indicator');
+    const icon = {approved:'✅',rejected:'❌',discuss:'💬'}[reviewState[id]] || '';
+    if (indicator) indicator.textContent = icon;
+    else if (icon) {
+      const d = document.createElement('div');
+      d.className = 'card-review-indicator'; d.textContent = icon;
+      card.appendChild(d);
+    }
+  });
+}
+
+function renderCountryGrid() {
+  document.getElementById('countryGrid').innerHTML = countryData.map(cd => {
+    const count = creators.filter(c => c.countryCode === cd.code).length;
+    const approved = creators.filter(c => c.countryCode === cd.code && reviewState[c.id] === 'approved').length;
+    const rejected = creators.filter(c => c.countryCode === cd.code && reviewState[c.id] === 'rejected').length;
+    let statusHtml = '';
+    if (approved > 0 || rejected > 0) {
+      statusHtml = `<div class="country-status">`;
+      if (approved > 0) statusHtml += `<span style="color:var(--electric)">${approved} ✓</span> `;
+      if (rejected > 0) statusHtml += `<span style="color:var(--red)">${rejected} ✗</span>`;
+      statusHtml += `</div>`;
+    }
+    return `<div class="country-card"><div class="country-flag">${cd.flag}</div><div class="country-name">${cd.name}</div><div class="country-count">${count} creator${count!==1?'s':''}</div>${statusHtml}</div>`;
+  }).join('');
+}
+
+function renderCountryRequests() {
+  document.getElementById('countryRequestGrid').innerHTML = countryData.map(cd => {
+    const count = creators.filter(c => c.countryCode === cd.code).length;
+    const isReq = countryRequests[cd.code];
+    return `<div class="country-request-row"><span class="cflag">${cd.flag}</span><span class="cname">${cd.name}</span><span class="ccount">${count} now</span><button class="request-more-btn ${isReq?'requested':''}" onclick="toggleRequest('${cd.code}',this)">${isReq?'✓ Requested':'+ More'}</button></div>`;
+  }).join('');
+}
+
+function toggleRequest(code, btn) {
+  countryRequests[code] = !countryRequests[code];
+  const cd = countryData.find(c=>c.code===code);
+  btn.classList.toggle('requested');
+  btn.textContent = countryRequests[code] ? '✓ Requested' : '+ More';
+  if (countryRequests[code]) showToast(`${cd.flag} More creators requested for ${cd.name}`);
+  scheduleSave();
+}
+
+function openCard(id) {
+  const c = creators.find(x => x.id === id);
+  if (!c) return;
+  document.querySelectorAll('.creator-card').forEach(ch => ch.classList.remove('active'));
+  document.querySelectorAll(`.creator-card[data-id="${id}"]`).forEach(ch => ch.classList.add('active'));
+
+  const platformsHtml = c.platforms.map(p => `<a href="${p.url}" target="_blank" class="profile-link">▸ ${p.name} <span style="color:var(--gold)">${p.followers}</span></a>`).join('');
+  const statsHtml = c.platforms.map(p => `<div class="stat-pill"><div class="val">${p.followers}</div><div class="lbl">${p.name}</div></div>`).join('');
+  const tagsHtml = c.tags.map(t => `<span class="why-tag">${t}</span>`).join('');
+  const isMC = c.role === 'MC Host' || c.role === 'Potential Host';
+  const roleColor = isMC ? 'var(--gold)' : 'var(--electric)';
+  const currentStatus = reviewState[c.id] || '';
+  const currentNote = clientNotes[c.id] || '';
+
+  document.getElementById('cardContent').innerHTML = `
+    <div class="expanded-header">${getAvatar(c,'lg')}<div class="expanded-info"><div class="expanded-name">${c.name}</div><div class="expanded-meta"><span>📍 ${c.country}</span><span>⚽ ${c.category}</span><span style="color:${roleColor};font-weight:600">${c.role}</span>${c.tier?`<span style="color:var(--text-muted)">${c.tier}</span>`:''}</div></div></div>
+    <div class="expanded-stats">${statsHtml}</div>
+    <div class="why-section"><div class="why-title">Why This Creator Was Selected</div><div class="why-text">${c.why}</div><div class="why-tags">${tagsHtml}</div></div>
+    <div class="expanded-links">${platformsHtml}</div>
+    <div class="review-actions">
+      <button class="review-btn approve ${currentStatus==='approved'?'selected':''}" onclick="setReview('${c.id}','approved',this)">✅ Approve</button>
+      <button class="review-btn reject ${currentStatus==='rejected'?'selected':''}" onclick="setReview('${c.id}','rejected',this)">❌ Reject</button>
+      <button class="review-btn discuss ${currentStatus==='discuss'?'selected':''}" onclick="setReview('${c.id}','discuss',this)">💬 Discuss</button>
+    </div>
+    <div class="client-notes-area"><label>Client Notes</label><textarea placeholder="Add feedback, questions, or alternatives..." oninput="saveNote('${c.id}',this.value)">${currentNote}</textarea></div>`;
+  document.getElementById('creatorOverlay').classList.add('visible');
+}
+
+function setReview(id, status, btn) {
+  const c = creators.find(x => x.id === id);
+  if (reviewState[id] === status) { delete reviewState[id]; btn.classList.remove('selected'); }
+  else { reviewState[id] = status; btn.closest('.review-actions').querySelectorAll('.review-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); }
+  updateCardStatus(id); updateReviewStats(); renderCountryGrid(); scheduleSave();
+  const labels = {approved:'Approved ✅',rejected:'Rejected ❌',discuss:'Marked for discussion 💬'};
+  if (reviewState[id]) showToast(`${c.flag} ${c.name} — ${labels[status]}`);
+}
+function saveNote(id, val) { clientNotes[id] = val; scheduleSave(); }
+function closeCard() {
+  document.getElementById('creatorOverlay').classList.remove('visible');
+  document.querySelectorAll('.creator-card').forEach(ch => ch.classList.remove('active'));
+}
+function updateReviewStats() {
+  const vals = Object.values(reviewState);
+  document.getElementById('statApproved').textContent = vals.filter(v=>v==='approved').length;
+  document.getElementById('statRejected').textContent = vals.filter(v=>v==='rejected').length;
+  document.getElementById('statDiscuss').textContent = vals.filter(v=>v==='discuss').length;
+  document.getElementById('statPending').textContent = creators.length - vals.length;
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function exportReview() {
+  const lines = ['OKX "Cheer Your Nation Live" — Creator Review Summary',`Date: ${new Date().toLocaleDateString()}`,'',`Markets: KSA, UAE, Egypt, Morocco, Jordan, Tunisia, Iraq, Qatar (8)`,''];
+  const vals = Object.values(reviewState);
+  lines.push(`✅ Approved: ${vals.filter(v=>v==='approved').length}`);
+  lines.push(`❌ Rejected: ${vals.filter(v=>v==='rejected').length}`);
+  lines.push(`💬 Discussion: ${vals.filter(v=>v==='discuss').length}`);
+  lines.push(`⏳ Pending: ${creators.length - vals.length}`);
+  lines.push('','=== CREATOR DECISIONS ===');
+  creators.forEach(c => {
+    const st = reviewState[c.id] || 'pending';
+    const icon = {approved:'✅',rejected:'❌',discuss:'💬',pending:'⏳'}[st];
+    lines.push(`${c.flag} ${c.name} (${c.country}) — ${c.role} — ${icon} ${st.toUpperCase()}`);
+    if (clientNotes[c.id]) lines.push(`   Notes: ${clientNotes[c.id]}`);
+  });
+  const requested = Object.entries(countryRequests).filter(([,v])=>v);
+  if (requested.length) { lines.push('','=== MORE CREATORS REQUESTED ==='); requested.forEach(([code])=>{ const cd=countryData.find(c=>c.code===code); lines.push(`${cd.flag} ${cd.name}`); }); }
+  const blob = new Blob([lines.join('\n')],{type:'text/plain'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'OKX_Creator_Review.txt'; a.click();
+  showToast('📄 Review summary exported!');
+}
+
+document.getElementById('creatorOverlay').addEventListener('click', function(e) { if (e.target === this) closeCard(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeCard(); });
+
+renderGrid(); renderFilterTabs(); renderCountryGrid(); renderCountryRequests(); initSupabase();
+</script>
+</body>
+</html>
