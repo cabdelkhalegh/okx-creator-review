@@ -507,7 +507,6 @@ section { padding: 5rem 0; }
   .budget-split { grid-template-columns: 1fr; }
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -704,16 +703,39 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 let supabase = null;
 let dbReady = false;
 
-async function initSupabase() {
+function loadSupabaseSDK() {
+  return new Promise((resolve, reject) => {
+    if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
+      resolve(); return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+async function initSupabase(retries) {
+  if (retries === undefined) retries = 2;
+  setSyncStatus('connecting');
   try {
+    await loadSupabaseSDK();
     if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function' || !SUPABASE_URL.startsWith('http')) {
       setSyncStatus('offline'); return;
     }
     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     dbReady = true;
-    setSyncStatus('saved');
     await loadFromDB();
-  } catch(e) { console.warn('Supabase init failed, running in local mode', e); setSyncStatus('offline'); }
+    setSyncStatus('saved');
+  } catch(e) {
+    console.warn('Supabase init failed (retries left: ' + retries + ')', e);
+    if (retries > 0) {
+      await new Promise(r => setTimeout(r, 2000));
+      return initSupabase(retries - 1);
+    }
+    setSyncStatus('offline');
+  }
 }
 
 function setSyncStatus(status) {
@@ -726,19 +748,16 @@ function setSyncStatus(status) {
 
 async function loadFromDB() {
   if (!dbReady) return;
-  try {
-    const {data,error} = await supabase.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
-    if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
-    if (data) {
-      if (data.decisions) Object.assign(reviewState, data.decisions);
-      if (data.notes) Object.assign(clientNotes, data.notes);
-      if (data.country_requests) Object.assign(countryRequests, data.country_requests);
-      creators.forEach(c => { if(reviewState[c.id]) updateCardStatus(c.id); });
-      updateReviewStats(); renderCountryGrid(); renderCountryRequests();
-      if (data.submitted_at) showAgencyPanel(data);
-    }
-    setSyncStatus('saved');
-  } catch(e) { console.warn('Load failed', e); setSyncStatus('offline'); }
+  const {data,error} = await supabase.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
+  if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
+  if (data) {
+    if (data.decisions) Object.assign(reviewState, data.decisions);
+    if (data.notes) Object.assign(clientNotes, data.notes);
+    if (data.country_requests) Object.assign(countryRequests, data.country_requests);
+    creators.forEach(c => { if(reviewState[c.id]) updateCardStatus(c.id); });
+    updateReviewStats(); renderCountryGrid(); renderCountryRequests();
+    if (data.submitted_at) showAgencyPanel(data);
+  }
 }
 
 async function saveToDB() {
