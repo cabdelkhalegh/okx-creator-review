@@ -700,11 +700,10 @@ let dbReady = false;
 
 async function initSupabase() {
   try {
-    if (typeof window.supabase === 'undefined' || !SUPABASE_URL.startsWith('http')) {
+    if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function' || !SUPABASE_URL.startsWith('http')) {
       setSyncStatus('offline'); return;
     }
     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    // Create table if not exists via RPC or just try to read
     dbReady = true;
     setSyncStatus('saved');
     await loadFromDB();
@@ -949,7 +948,7 @@ let activeFilter = 'all';
 function getAvatar(c, size) {
   const cls = size==='lg' ? 'expanded-avatar' : 'card-avatar';
   const fbCls = size==='lg' ? 'expanded-avatar-fallback' : 'card-avatar-fallback';
-  if (c.igHandle) return `<img class="${cls}" src="https://unavatar.io/instagram/${c.igHandle}" alt="${c.name}" onerror="this.outerHTML='<div class=\\'${fbCls}\\'>${c.flag}</div>'">`;
+  if (c.igHandle) return `<img class="${cls}" src="https://unavatar.io/instagram/${c.igHandle}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="${fbCls}" style="display:none">${c.flag}</div>`;
   return `<div class="${fbCls}">${c.flag}</div>`;
 }
 
