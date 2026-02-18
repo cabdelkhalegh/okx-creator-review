@@ -701,7 +701,7 @@ let saveTimer = null;
 // Replace these with your Supabase project URL and anon key
 const SUPABASE_URL = 'https://trxifnxyrncsoxgklwcq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyeGlmbnh5cm5jc294Z2tsd2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0NDI4MDYsImV4cCI6MjA4NzAxODgwNn0.kB0PKy1CLxsJIU1T2JIbtyDYV1HK0Pf3zaOsN_Kp5vc';
-let supabase = null;
+let supabaseClient = null;
 let dbReady = false;
 
 async function initSupabase() {
@@ -709,7 +709,7 @@ async function initSupabase() {
     if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function' || !SUPABASE_URL.startsWith('http')) {
       setSyncStatus('offline'); return;
     }
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     dbReady = true;
     setSyncStatus('saved');
     await loadFromDB();
@@ -727,7 +727,7 @@ function setSyncStatus(status) {
 async function loadFromDB() {
   if (!dbReady) return;
   try {
-    const {data,error} = await supabase.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
+    const {data,error} = await supabaseClient.from('okx_reviews').select('*').eq('campaign','okx-wc2026').single();
     if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
     if (data) {
       if (data.decisions) Object.assign(reviewState, data.decisions);
@@ -746,7 +746,7 @@ async function saveToDB() {
   setSyncStatus('saving');
   try {
     const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, updated_at:new Date().toISOString() };
-    const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+    const {error} = await supabaseClient.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
     if (error) throw error;
     setSyncStatus('saved');
   } catch(e) { console.warn('Save failed', e); setSyncStatus('offline'); }
@@ -763,7 +763,7 @@ async function submitReview() {
   if (dbReady) {
     try {
       const payload = { campaign:'okx-wc2026', decisions:reviewState, notes:clientNotes, country_requests:countryRequests, submitted_at:new Date().toISOString(), updated_at:new Date().toISOString() };
-      const {error} = await supabase.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
+      const {error} = await supabaseClient.from('okx_reviews').upsert(payload, {onConflict:'campaign'});
       if (error) throw error;
       showToast('🚀 Selections submitted! Agency team notified to begin outreach.');
       document.getElementById('submitBtn').disabled = true;
