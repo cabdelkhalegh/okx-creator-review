@@ -212,6 +212,16 @@ section{padding:6rem 0}
 .card-stat .cs-val{color:var(--gold);font-weight:700}
 .card-stat .cs-plat{color:var(--text-muted);font-size:0.6rem}
 
+.card-cost{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;padding:0.18rem 0.55rem;border-radius:7px;display:inline-flex;align-items:center;gap:0.2rem}
+.card-cost.has-price{color:var(--electric);background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12)}
+.card-cost.tbd{color:var(--red);background:rgba(255,68,85,0.04);border:1px solid rgba(255,68,85,0.1)}
+.card-am{font-size:0.52rem;padding:0.12rem 0.4rem;border-radius:5px;color:var(--text-muted);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);font-weight:600}
+.card-outreach{font-size:0.5rem;padding:0.1rem 0.35rem;border-radius:4px;font-weight:700;letter-spacing:0.04em}
+.card-outreach.responded{color:var(--electric);background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.08)}
+.card-outreach.sent-dm{color:var(--gold);background:rgba(200,168,78,0.03);border:1px solid rgba(200,168,78,0.08)}
+.card-outreach.pending{color:var(--text-muted);background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.03)}
+.card-bottom-row{display:flex;align-items:center;gap:0.35rem;flex-wrap:wrap;margin-top:0.5rem}
+
 .card-tags{display:flex;gap:0.25rem;flex-wrap:wrap}
 .card-tag{font-size:0.55rem;padding:0.12rem 0.45rem;background:rgba(200,168,78,0.03);border:1px solid rgba(200,168,78,0.06);border-radius:5px;color:var(--gold-dim);transition:all 0.3s}
 .creator-card:hover .card-tag{border-color:rgba(200,168,78,0.12);color:var(--gold-light)}
@@ -415,8 +425,9 @@ section{padding:6rem 0}
   <div class="hero-flags">
     <span class="hero-flag">🇸🇦 KSA</span><span class="hero-flag">🇦🇪 UAE</span><span class="hero-flag">🇪🇬 Egypt</span><span class="hero-flag">🇲🇦 Morocco</span>
     <span class="hero-flag">🇯🇴 Jordan</span><span class="hero-flag">🇹🇳 Tunisia</span><span class="hero-flag">🇮🇶 Iraq</span><span class="hero-flag">🇶🇦 Qatar</span>
+    <span class="hero-flag">🇧🇭 Bahrain</span><span class="hero-flag">🇴🇲 Oman</span><span class="hero-flag">🇩🇿 Algeria</span>
   </div>
-  <div class="hero-meta"><strong>8 Weeks</strong> · 16 Live Episodes · 1 MC Host + 6 Participants<br><strong>8 Markets</strong> · 24 Creators Shortlisted · Football-Themed Fawazeer Format</div>
+  <div class="hero-meta"><strong>8 Weeks</strong> · 16 Live Episodes · 1 MC Host + 6 Participants<br><strong>11 Markets</strong> · <span id="heroCreatorCount">50</span> Creators Shortlisted · Football-Themed Fawazeer Format</div>
 </section>
 
 <section id="concept">
@@ -472,9 +483,9 @@ section{padding:6rem 0}
 </section>
 
 <section id="creators">
-  <div class="section-tag">05 — Creator Roster (24 Shortlisted)</div>
+  <div class="section-tag" id="sectionTag">05 — Creator Roster</div>
   <div class="section-title">REVIEW EACH CREATOR</div>
-  <div class="section-desc">24 shortlisted creators across 8 markets. Click any card to see their full profile, stats, and social links. Approve, reject, or mark for discussion.</div>
+  <div class="section-desc">50 shortlisted creators across 11 markets with pricing data. Click any card to see their full profile, cost, GEO breakdown, and social links. Approve, reject, or mark for discussion.</div>
   <div class="filter-tabs" id="filterTabs"></div>
   <div class="creators-hint">Click any creator card to open their full profile and review</div>
   <div class="creators-grid" id="creatorsGrid"></div>
@@ -485,7 +496,7 @@ section{padding:6rem 0}
       <div class="review-stat-box approved"><div class="num" id="statApproved">0</div><div class="lbl">Approved</div></div>
       <div class="review-stat-box rejected"><div class="num" id="statRejected">0</div><div class="lbl">Rejected</div></div>
       <div class="review-stat-box discuss"><div class="num" id="statDiscuss">0</div><div class="lbl">Discussion</div></div>
-      <div class="review-stat-box pending"><div class="num" id="statPending">24</div><div class="lbl">Pending</div></div>
+      <div class="review-stat-box pending"><div class="num" id="statPending">50</div><div class="lbl">Pending</div></div>
     </div>
     <div style="font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.8rem">Request More Creators by Country</div>
     <div class="country-request-grid" id="countryRequestGrid"></div>
@@ -539,12 +550,37 @@ section{padding:6rem 0}
       <div class="admin-title">📊 Agency Portal</div>
       <div class="admin-sub">Upload creators and track client decisions in real-time</div>
       <div class="admin-tabs">
-        <div class="admin-tab active" onclick="switchAdminTab('upload',this)">📤 Upload Creators</div>
+        <div class="admin-tab active" onclick="switchAdminTab('manage',this)">👥 Manage Roster</div>
+        <div class="admin-tab" onclick="switchAdminTab('upload',this)">📤 Upload Excel</div>
         <div class="admin-tab" onclick="switchAdminTab('dashboard',this)">📋 Client Decisions</div>
         <div class="admin-tab" onclick="switchAdminTab('requests',this)">🌍 Country Requests</div>
       </div>
+      <!-- MANAGE ROSTER TAB -->
+      <div class="admin-section active" id="adminManage">
+        <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center">
+          <input class="admin-input" type="text" id="rosterSearch" placeholder="Search by name, country..." style="flex:1;min-width:180px;margin:0" oninput="renderRosterTable()">
+          <select class="admin-input" id="rosterFilter" style="width:auto;min-width:140px;margin:0" onchange="renderRosterTable()">
+            <option value="all">All Statuses</option>
+            <option value="Responded">Responded</option>
+            <option value="Sent DM">Sent DM</option>
+            <option value="hidden">Hidden</option>
+            <option value="noresponse">No Response</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="upload-table" id="rosterTable">
+            <thead><tr><th>Visible</th><th>Name</th><th>Country</th><th>Platform</th><th>Followers</th><th>Cost</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="rosterTableBody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="upload-template-btn" onclick="showAllCreators()">👁 Show All</button>
+          <button class="upload-template-btn" onclick="hideNonResponded()">🙈 Hide Non-Responded</button>
+          <button class="upload-confirm-btn" onclick="saveRosterChanges()" style="margin:0">💾 Save All Changes</button>
+        </div>
+      </div>
       <!-- UPLOAD TAB -->
-      <div class="admin-section active" id="adminUpload">
+      <div class="admin-section" id="adminUpload">
         <div class="upload-zone" id="uploadZone">
           <div class="upload-zone-icon">📁</div>
           <div class="upload-zone-title">Drop your Excel file here</div>
@@ -552,11 +588,9 @@ section{padding:6rem 0}
           <input type="file" accept=".xlsx,.xls,.csv" onchange="handleExcelUpload(this.files[0])">
         </div>
         <div class="excel-format-hint">
-          <strong>Required columns:</strong> Name, Country, Instagram Handle, Role, Category, Tier<br>
-          <strong>Optional columns:</strong> Platform1, Followers1, URL1, Platform2, Followers2, URL2, Platform3, Followers3, URL3, Why Selected, Tags<br>
-          <strong>Country values:</strong> Saudi Arabia, UAE, Egypt, Morocco, Jordan, Tunisia, Iraq, Qatar<br>
-          <strong>Role values:</strong> Participant, Potential Host, MC Host<br>
-          <strong>Tier values:</strong> Celebrity, Mega, Macro, Mid, Micro
+          <strong>Required columns:</strong> KOL, Market, Platform, Followers, Role, Creator Tier, Link, Status<br>
+          <strong>Optional columns:</strong> Cost (USD), GEO, Category, Why Selected<br>
+          <strong>Note:</strong> Only rows with Status = "Responded" will be shown to the client. Duplicates (matching KOL name) are auto-skipped — existing creators get their price updated instead.
         </div>
         <button class="upload-template-btn" onclick="downloadTemplate()">📥 Download Template</button>
         <div class="upload-preview" id="uploadPreview">
@@ -609,36 +643,62 @@ function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveToDB,12
 async function submitReview(){try{if(dbReady){const{error}=await sbClient.from('okx_reviews').upsert({campaign:'okx-wc2026',decisions:reviewState,notes:clientNotes,country_requests:countryRequests,submitted_at:new Date().toISOString(),updated_at:new Date().toISOString()},{onConflict:'campaign'});if(error)throw error}const btn=document.getElementById('submitBtn');btn.textContent='✅ Selections Submitted!';btn.classList.add('submitted');showToast('🚀 Review submitted successfully!');showAgencyPanel({decisions:reviewState,notes:clientNotes,submitted_at:new Date().toISOString()})}catch(e){console.warn('Submit failed',e);showToast('⚠️ Submit failed — try again')}}
 function showAgencyPanel(data){const panel=document.getElementById('agencyPanel'),list=document.getElementById('submittedList'),timeEl=document.getElementById('submittedTime');const d=data.decisions||{},n=data.notes||{};const so=['approved','discuss','rejected'],si={approved:'✅',rejected:'❌',discuss:'💬'},sl={approved:'APPROVED',rejected:'REJECTED',discuss:'DISCUSS'};let h='';so.forEach(st=>{creators.filter(c=>d[c.id]===st).forEach(c=>{h+=`<div class="submitted-row"><span class="sr-flag">${c.flag}</span><span class="sr-name">${c.name}</span><span class="sr-country">${c.country}</span><span class="sr-status st-${st}">${si[st]} ${sl[st]}</span>${n[c.id]?`<div class="sr-note">📝 ${n[c.id]}</div>`:''}</div>`})});if(!h)h='<div style="color:var(--text-muted);font-size:0.85rem">No selections yet</div>';list.innerHTML=h;if(data.submitted_at)timeEl.textContent=`Submitted: ${new Date(data.submitted_at).toLocaleString()}`;panel.style.display='block'}
 
-const countryData=[{code:'KSA',name:'Saudi Arabia',flag:'🇸🇦'},{code:'UAE',name:'UAE',flag:'🇦🇪'},{code:'Egypt',name:'Egypt',flag:'🇪🇬'},{code:'Morocco',name:'Morocco',flag:'🇲🇦'},{code:'Jordan',name:'Jordan',flag:'🇯🇴'},{code:'Tunisia',name:'Tunisia',flag:'🇹🇳'},{code:'Iraq',name:'Iraq',flag:'🇮🇶'},{code:'Qatar',name:'Qatar',flag:'🇶🇦'}];
+const countryData=[{code:'KSA',name:'Saudi Arabia',flag:'🇸🇦'},{code:'UAE',name:'UAE',flag:'🇦🇪'},{code:'Egypt',name:'Egypt',flag:'🇪🇬'},{code:'Morocco',name:'Morocco',flag:'🇲🇦'},{code:'Jordan',name:'Jordan',flag:'🇯🇴'},{code:'Tunisia',name:'Tunisia',flag:'🇹🇳'},{code:'Iraq',name:'Iraq',flag:'🇮🇶'},{code:'Qatar',name:'Qatar',flag:'🇶🇦'},{code:'Bahrain',name:'Bahrain',flag:'🇧🇭'},{code:'Oman',name:'Oman',flag:'🇴🇲'},{code:'Algeria',name:'Algeria',flag:'🇩🇿'}];
 
 const creators=[
-  {id:'hemex',name:'Hemex (Mohammed Aldhurafi)',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Celebrity',igHandle:'hemex_77',platforms:[{name:'Instagram',followers:'2.6M',url:'https://www.instagram.com/hemex_77/'},{name:'YouTube',followers:'1.53M',url:'https://www.youtube.com/@hemex'}],why:'Multi-platform football powerhouse (2.6M IG + 1.53M YT). Celebrity tier with YouTube giving strong recap distribution. High-energy content fits fawazeer format.',tags:['2.6M IG','1.53M YT','Celebrity','Multi-Platform']},
-  {id:'abadi-zahrani',name:'Abadi Al Zahrani',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'iabadiz',platforms:[{name:'TikTok',followers:'355K',url:'https://www.tiktok.com/@iabadiz'}],why:'Rising 355K TikTok creator with grassroots energy. Higher engagement rates — ideal for driving real sign-ups.',tags:['355K TikTok','Rising Creator','High Engagement']},
-  {id:'abdullah-sulaiman',name:'Abdullah Sulaiman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'hrm_79',platforms:[{name:'Instagram',followers:'314K',url:'https://www.instagram.com/hrm_79'}],why:'314K IG football creator from KSA. Responded with competitive rate — strong campaign readiness.',tags:['314K IG','KSA Football','Responded']},
-  {id:'bassam-soliman',name:'Bassam Soliman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'bassem_soliman7',platforms:[{name:'Instagram',followers:'347K',url:'https://www.instagram.com/bassem_soliman7'}],why:'347K IG football creator. Quick response and competitive pricing signals strong brand fit and availability.',tags:['347K IG','KSA Football','Competitive Rate']},
-  {id:'majed-baqadim',name:'Majed Baqadim',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'majed.mb7',platforms:[{name:'Instagram',followers:'141K',url:'https://www.instagram.com/majed.mb7/'}],why:'141K football creator from Saudi. Mid-tier with authentic community and solid engagement.',tags:['141K IG','Mid-Tier','Authentic']},
-  {id:'khaled-abbassi',name:'Khaled Abbassi',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mega',igHandle:'_ftg',platforms:[{name:'YouTube',followers:'2.48M',url:'https://www.youtube.com/@WithKhaled'},{name:'TikTok',followers:'2.3M',url:'https://www.tiktok.com/@withkhaled'},{name:'Instagram',followers:'400K',url:'https://www.instagram.com/_ftg/'}],why:'Triple-platform football creator (2.48M YT + 2.3M TT + 400K IG). Dubai-based — strong MC Host candidate with high-energy presentation style.',tags:['2.48M YT','2.3M TikTok','Dubai-Based','MC Host']},
-  {id:'saif-shawaf',name:'Saif Shawaf',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Lifestyle',role:'Participant',tier:'—',igHandle:'saifshawaf',platforms:[{name:'TikTok',followers:'—',url:'https://www.tiktok.com/@saifshawaf'}],why:'UAE lifestyle creator. Broadens audience beyond core football fans. Responded and available for campaign.',tags:['UAE','Lifestyle','TikTok']},
-  {id:'alicia',name:'Ali Iannacone',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',igHandle:'ali.iannacone',platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/ali.iannacone'}],why:'1.2M IG. TikTok Awards Best Sports Content Creator. TV presenter on ONTIME SPORTS Capitano Egypt. Multilingual (FR/EN/IT/AR). Father is Al Ahly FC goalkeeper trainer.',tags:['1.2M IG','TikTok Awards','TV Presenter','Multilingual']},
-  {id:'mamdouh',name:'Mamdouh Nasr Allah',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',igHandle:'mamdouh.nasrallah',platforms:[{name:'TikTok',followers:'954K',url:'https://www.tiktok.com/@mamdouh_nasr_allah'},{name:'YouTube',followers:'1.94M',url:'https://www.youtube.com/@mamdouhnasrallah'},{name:'X (Twitter)',followers:'573K',url:'https://x.com/MamdouhNasrAllh'}],why:'Mega creator — 954K TikTok, 1.94M YouTube, 573K X. Football commentator covering La Liga and Champions League. Massive cross-platform reach.',tags:['1.94M YT','954K TikTok','573K X','Commentator']},
-  {id:'oussama',name:'Oussama Özil',flag:'🇲🇦',country:'Morocco',countryCode:'Morocco',category:'Football',role:'Participant',tier:'Macro',igHandle:'oussama_ozil',platforms:[{name:'TikTok',followers:'440K+',url:'https://www.tiktok.com/@oussama_ozil'},{name:'Instagram',followers:'200K+',url:'https://www.instagram.com/oussama_ozil'}],why:'440K+ TikTok + 200K+ IG Moroccan football creator. Sole Morocco rep — essential market coverage.',tags:['440K+ TikTok','200K+ IG','Morocco Rep']},
-  {id:'khaled-raed',name:'Khaled Raed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Entertainment',role:'Participant',tier:'Macro',igHandle:'khaledraedd1',platforms:[{name:'Instagram',followers:'267K',url:'https://www.instagram.com/khaledraedd1'},{name:'TikTok',followers:'306K',url:'https://www.tiktok.com/@khaledraedd1'}],why:'267K IG + 306K TikTok entertainment creator from Jordan. Dual-platform presence with strong engagement.',tags:['267K IG','306K TikTok','Entertainment']},
-  {id:'myfitmaya',name:'MyFitMaya',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Sports / Lifestyle',role:'Participant',tier:'Macro',igHandle:'myfitmaya',platforms:[{name:'Instagram',followers:'184K',url:'https://www.instagram.com/myfitmaya'}],why:'184K IG sports/lifestyle creator from Jordan. Female voice diversifies roster beyond male football fans.',tags:['184K IG','Female Voice','Sports/Lifestyle']},
-  {id:'ali-abusrwal',name:'Ali Abu Srwal',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football / Gaming',role:'Participant',tier:'Mega',igHandle:'abu_srwal',platforms:[{name:'Instagram',followers:'3M',url:'https://www.instagram.com/abu_srwal/'},{name:'YouTube',followers:'4.14M',url:'https://www.youtube.com/@abusrwal'}],why:'3M IG + 4.14M YT — Jordan\'s biggest football/gaming creator. La Liga ambassador, EA Sports FC Mobile ambassador.',tags:['3M IG','4.14M YT','La Liga Amb.','Gaming']},
-  {id:'hamza-samara',name:'Hamza Samara',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle',role:'Participant',tier:'Mega',igHandle:'hhsamara',platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/hhsamara'}],why:'1.2M IG lifestyle creator from Jordan. Fashion/lifestyle angle diversifies roster. Strong visual aesthetic.',tags:['1.2M IG','Lifestyle','Fashion']},
-  {id:'mahmood-fahmawi',name:'Mahmood Fahmawi',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle / Entertainment',role:'Potential Host',tier:'Mega',igHandle:'fa7mawii_',platforms:[{name:'Instagram',followers:'303K',url:'https://www.instagram.com/fa7mawii_'}],why:'303K IG Jordanian creator. Strong on-camera presence makes him a solid Potential Host candidate.',tags:['303K IG','Potential Host','On-Camera']},
-  {id:'bu-rashed',name:'Bu Rashed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle / Entertainment',role:'Potential Host',tier:'Mega',igHandle:'burashed.10',platforms:[{name:'Instagram',followers:'602K',url:'https://www.instagram.com/burashed.10'}],why:'602K IG Jordanian football/entertainment creator. Strong presenter energy — Potential Host candidate.',tags:['602K IG','Potential Host','Presenter']},
-  {id:'douha',name:'Douha Laribi',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Celebrity',igHandle:'douhalaribi',platforms:[{name:'TikTok',followers:'18.8M',url:'https://www.tiktok.com/@douhalaribi'}],why:'18.8M TikTok — biggest creator in the entire roster. TikTok MENA "Best Audience" award. Tunisia\'s #1 female influencer.',tags:['18.8M TikTok','Tunisia #1','MENA Award','Celebrity']},
-  {id:'nawres',name:'Nawres Briki',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Mega',igHandle:'nawres_briki',platforms:[{name:'TikTok',followers:'1M+',url:'https://www.tiktok.com/@nawres_briki'}],why:'1M+ TikTok entertainment creator from Tunisia. Young audience widens OKX funnel beyond male football fans.',tags:['1M+ TikTok','Tunisia','Young Audience']},
-  {id:'rafik',name:'Rafik Aouay',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Macro',igHandle:'rafik_aouay',platforms:[{name:'TikTok',followers:'500K+',url:'https://www.tiktok.com/@rafik_aouay'}],why:'500K+ TikTok entertainment creator from Tunisia. Third Tunisia rep for solid market depth.',tags:['500K+ TikTok','Tunisia','Entertainment']},
-  {id:'farid',name:'Farid Kenzo',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Lifestyle / Entertainment',role:'Participant',tier:'Mega',igHandle:'farid__kenzo8',platforms:[{name:'Instagram',followers:'7.2M',url:'https://www.instagram.com/farid__kenzo8'}],why:'7.2M IG — biggest Iraqi creator. Essential market coverage. Entertainment style brings massive crossover reach.',tags:['7.2M IG','Iraq #1','Mega','Entertainment']},
-  {id:'ali-alabood',name:'Ali Al-Abood',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',igHandle:'chrisitox',platforms:[{name:'Instagram',followers:'125K',url:'https://www.instagram.com/chrisitox/'}],why:'125K Iraqi football creator. Authentic Iraq football community reach.',tags:['125K IG','Iraq Football','Authentic']},
-  {id:'mohammad-enad',name:'Mohammad Enad',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Mega',igHandle:'mohammad10enad',platforms:[{name:'TikTok',followers:'2M',url:'https://www.tiktok.com/@mohammad10enad'}],why:'2M TikTok — biggest Iraqi football creator on the platform. Mega tier with massive reach across Iraq and MENA.',tags:['2M TikTok','Iraq Football','Mega Tier']},
-  {id:'abbas-biso',name:'Abbas Biso',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',igHandle:'ab55as',platforms:[{name:'YouTube',followers:'686K',url:'https://www.youtube.com/@Ab55as'}],why:'686K YouTube football creator from Iraq. YouTube distribution ideal for recap content and highlights.',tags:['686K YouTube','Iraq Football','Recap']},
-  {id:'khalid-alfadhli',name:'Khalid Alfadhli',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Micro',igHandle:'khalidalfadli',platforms:[{name:'Instagram',followers:'60.5K',url:'https://www.instagram.com/khalidalfadli/'}],why:'60.5K Qatari football creator. Micro tier with tight-knit engaged community. Authentic Qatar market reach.',tags:['60.5K IG','Qatar Rep','Engaged']}
+  {id:'abdullah-sulaiman',name:'Abdullah Sulaiman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Macro',igHandle:'hrm_79',cost:'$13,500',am:'Zain',outreach:'Responded',platforms:[{name:'Instagram',followers:'314K',url:'https://www.instagram.com/hrm_79'}],why:'314K IG football creator from KSA. Quoted $13,500. GEO: UAE 1% · QAT 2% · KSA 13%',tags:['314K IG','$13,500','KSA','Macro']},
+  {id:'bassam-soliman',name:'Bassam Soliman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Macro',igHandle:'bassem_soliman7',cost:'$11,500',am:'Zain',outreach:'Responded',platforms:[{name:'Instagram',followers:'347K',url:'https://www.instagram.com/bassem_soliman7'}],why:'347K IG football creator. Quoted $11,500. GEO: OMAN 1% · UAE 24% · KSA 25%',tags:['347K IG','$11,500','KSA','Macro']},
+  {id:'karzmaa',name:'Karzmaa',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mega',igHandle:'karzmaa04',cost:'$20,000',am:'Mohammed',outreach:'Responded',platforms:[{name:'TikTok',followers:'3.6M',url:'https://www.tiktok.com/@karzmaa04'}],why:'3.6M TikTok football creator from KSA. Mega tier with dominant 70% KSA audience. Quoted $20,000. GEO: IRAQ 4% · UAE 2% · KSA 70%',tags:['3.6M TikTok','$20,000','KSA 70%','Mega']},
+  {id:'mamdouh',name:'Mamdouh Nasr Allah',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',igHandle:'mamdouh_nasr_allah',cost:'$15,000',am:'Yara',outreach:'Responded',platforms:[{name:'TikTok',followers:'1M',url:'https://www.tiktok.com/@mamdouh_nasr_allah'},{name:'YouTube',followers:'1.94M',url:'https://www.youtube.com/@mamdouhnasrallah'},{name:'X',followers:'573K',url:'https://x.com/MamdouhNasrAllh'}],why:'Mega multi-platform creator — 1M TikTok, 1.94M YouTube, 573K X. Football commentator. Quoted $15,000. GEO: EGY 46% · UAE 3% · KSA 9%',tags:['1.94M YT','1M TikTok','$15,000','EGY 46%']},
+  {id:'ali-alabood',name:'Ali Al-Abood',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',igHandle:'chrisitox',cost:'$10,000',am:'Zain',outreach:'Responded',platforms:[{name:'Instagram',followers:'125K',url:'https://www.instagram.com/chrisitox/'}],why:'125K Iraqi football creator. Authentic Iraq reach — 75% Iraq audience. Quoted $10,000. GEO: IRAQ 75% · UAE 6% · KSA 8%',tags:['125K IG','$10,000','IRAQ 75%','Macro']},
+  {id:'mohammad-enad',name:'Mohammad Enad',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Mega',igHandle:'mohammad10enad',cost:'$70,000',am:'Zain',outreach:'Responded',platforms:[{name:'TikTok',followers:'2M',url:'https://www.tiktok.com/@mohammad10enad'}],why:'2M TikTok — biggest Iraqi football creator on the platform. Quoted $70,000. GEO: IRAQ 38% · UAE 2% · KSA 9%',tags:['2M TikTok','$70,000','IRAQ 38%','Mega']},
+  {id:'abbas-biso',name:'Abbas Biso',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Football',role:'Participant',tier:'Macro',igHandle:'Ab55as',cost:'$7,000',am:'Zain',outreach:'Responded',platforms:[{name:'YouTube',followers:'686K',url:'https://www.youtube.com/@Ab55as'}],why:'686K YouTube football creator from Iraq. Great for recap content. Quoted $7,000. GEO: IRAQ 44% · UAE 1% · KSA 1%',tags:['686K YouTube','$7,000','IRAQ 44%','Macro']},
+  {id:'hemex',name:'Hemex (Mohammed Aldhurafi)',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mega',igHandle:'hemex_77',cost:'$23,000',am:'Alaa',outreach:'Responded',platforms:[{name:'Instagram',followers:'2.6M',url:'https://www.instagram.com/hemex_77/'},{name:'YouTube',followers:'1.53M',url:'https://www.youtube.com/@hemex'}],why:'Multi-platform football powerhouse (2.6M IG + 1.53M YT). Quoted $23,000. GEO: EGY 9% · IRAQ 16% · KSA 17%',tags:['2.6M IG','1.53M YT','$23,000','Mega']},
+  {id:'abadi-zahrani',name:'Abadi Al Zahrani',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'iabadiz',cost:'$6,500',am:'Alaa',outreach:'Responded',platforms:[{name:'TikTok',followers:'355K',url:'https://www.tiktok.com/@iabadiz'}],why:'355K TikTok creator with grassroots energy. Quoted $6,500. GEO: OMAN 3% · UAE 9% · KSA 10%',tags:['355K TikTok','$6,500','KSA','Mid']},
+  {id:'khaled-abbassi',name:'Khaled Abbassi',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mega',igHandle:'_ftg',cost:'$60,274',am:'Alaa',outreach:'Responded',platforms:[{name:'YouTube',followers:'2.48M',url:'https://www.youtube.com/@WithKhaled'},{name:'TikTok',followers:'2.3M',url:'https://www.tiktok.com/@withkhaled'},{name:'Instagram',followers:'400K',url:'https://www.instagram.com/_ftg/'}],why:'Triple-platform football creator (2.48M YT + 2.3M TT + 400K IG). Dubai-based MC Host candidate. Quoted $60,274. GEO: EGY 21% · ALG 15% · KSA 11%',tags:['2.48M YT','2.3M TikTok','$60,274','MC Host']},
+  {id:'saif-shawaf',name:'Saif Shawaf',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Lifestyle',role:'Participant',tier:'Celebrity',igHandle:'saifshawaf',cost:'$57,000',am:'Alaa',outreach:'Responded',platforms:[{name:'TikTok',followers:'9.4M',url:'https://www.tiktok.com/@saifshawaf'}],why:'9.4M TikTok celebrity. Broadens audience beyond football. Quoted $57,000. GEO: IRAQ 8% · EGY 5% · KSA 3%',tags:['9.4M TikTok','$57,000','Celebrity','UAE']},
+  {id:'hessa-alisa',name:'Hessa Alisa',flag:'🇧🇭',country:'Bahrain',countryCode:'Bahrain',category:'Football',role:'Participant',tier:'Micro',igHandle:'hessa_alisa',cost:'TBD',am:'Alaa',outreach:'',platforms:[{name:'Instagram',followers:'28K',url:'https://www.instagram.com/hessa_alisa'}],why:'28K IG Bahraini football creator. Female voice from Bahrain — new market coverage. GEO: BAH 22% · UAE 4% · KSA 6%',tags:['28K IG','Bahrain','Micro','Female']},
+  {id:'omar-abu-safiya',name:'Omar Abu Safiya',flag:'🇧🇭',country:'Bahrain',countryCode:'Bahrain',category:'Football',role:'Participant',tier:'Mid',igHandle:'omar.abusafiya',cost:'TBD',am:'Alaa',outreach:'',platforms:[{name:'Instagram',followers:'288K',url:'https://www.instagram.com/omar.abusafiya'}],why:'288K IG Bahrain football creator. Cross-market reach into Iraq and KSA. GEO: IRAQ 22% · EGY 11% · KSA 15%',tags:['288K IG','Bahrain','Mid','Cross-Market']},
+  {id:'alicia',name:'Alicia Iannacone',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',igHandle:'ali.iannacone',cost:'TBD',am:'Alaa',outreach:'Responded',platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/ali.iannacone'}],why:'1.2M IG. TikTok Awards Best Sports Content Creator. TV presenter. Multilingual (FR/EN/IT/AR). 78% Egypt audience. GEO: EGY 78% · UAE 2% · KSA 3%',tags:['1.2M IG','TV Presenter','EGY 78%','Mega']},
+  {id:'oussama',name:'Oussama Özil',flag:'🇲🇦',country:'Morocco',countryCode:'Morocco',category:'Football',role:'Participant',tier:'Macro',igHandle:'oussama_ozil',cost:'$9,000',am:'Alaa',outreach:'Responded',platforms:[{name:'TikTok',followers:'440K+',url:'https://www.tiktok.com/@oussama_ozil'},{name:'Instagram',followers:'200K+',url:'https://www.instagram.com/oussama_ozil'}],why:'440K+ TikTok + 200K+ IG. Morocco rep. Quoted $9,000. GEO: MOR 28% · EGY 14% · IRAQ 8%',tags:['440K+ TikTok','$9,000','MOR 28%','Macro']},
+  {id:'khaled-raed',name:'Khaled Raed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Entertainment',role:'Participant',tier:'Macro',igHandle:'khaledraedd1',cost:'$3,000',am:'Alaa',outreach:'Responded',platforms:[{name:'Instagram',followers:'267K',url:'https://www.instagram.com/khaledraedd1'},{name:'TikTok',followers:'306K',url:'https://www.tiktok.com/@khaledraedd1'}],why:'267K IG + 306K TikTok. Jordan entertainment. Quoted $3,000. GEO: JOR 35–45% · EGY 2–3% · KSA 6–8%',tags:['267K IG','306K TikTok','$3,000','Jordan']},
+  {id:'majed-baqadim',name:'Majed Baqadim',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mid',igHandle:'majed.mb7',cost:'TBD',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'141K',url:'https://www.instagram.com/majed.mb7/'}],why:'141K football creator from Saudi. 24% KSA audience. Authentic community. GEO: OMAN 1% · UAE 2% · KSA 24%',tags:['141K IG','KSA 24%','Mid','Authentic']},
+  {id:'ahmad-abu-rob',name:'Ahmad Abu Rob',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Comedy',role:'Potential Host',tier:'Celebrity',igHandle:'aburob',cost:'$52,700',am:'Ali',outreach:'Responded',platforms:[{name:'YouTube',followers:'10.3M',url:'https://www.youtube.com/@aburob'}],why:'10.3M YouTube comedy celebrity. Massive MENA reach. Potential Host candidate. Quoted $52,700. GEO: ALG 14% · EGY 12% · KSA 12%',tags:['10.3M YT','$52,700','Celebrity','Host']},
+  {id:'hamza-samara',name:'Hamza Samara',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Blogger',role:'Participant',tier:'Mega',igHandle:'hhsamara',cost:'TBD',am:'Areej',outreach:'Responded',platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/hhsamara'}],why:'1.2M IG Jordan blogger/lifestyle creator. Strong Jordan audience. GEO: JOR 38% · LEB 2% · KSA 9%',tags:['1.2M IG','JOR 38%','Mega','Lifestyle']},
+  {id:'khalid-alfadhli',name:'Khalid Alfadhli',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Micro',igHandle:'khalidalfadli',cost:'TBD',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'60.5K',url:'https://www.instagram.com/khalidalfadli/'}],why:'60.5K Qatari football creator. Tight-knit engaged community. GEO: QAT 21% · UAE 2% · BAH 8%',tags:['60.5K IG','QAT 21%','Micro','Qatar']},
+  {id:'qqq',name:'QQQ',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Mega',igHandle:'qqq',cost:'TBD',am:'Ali',outreach:'Sent DM',platforms:[{name:'Instagram',followers:'2.2M',url:'https://www.instagram.com/qqq/'}],why:'2.2M IG Qatar football creator. Dominant 55% Qatar audience. GEO: QAT 55% · KSA 4% · OMAN 5%',tags:['2.2M IG','QAT 55%','Mega','Sent DM']},
+  {id:'ka-5',name:'ka._.5',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Mega',igHandle:'ka._.5',cost:'TBD',am:'Ali',outreach:'Sent DM',platforms:[{name:'Instagram',followers:'1.2M',url:'https://www.instagram.com/ka._.5/'}],why:'1.2M IG Qatar football creator. 64% Qatar audience — strongest local reach. GEO: QAT 64% · KSA 5% · US 4%',tags:['1.2M IG','QAT 64%','Mega','Sent DM']},
+  {id:'ayman-jadah',name:'Ayman Jadah',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Potential Host',tier:'Macro',igHandle:'aymanjadaofficial',cost:'TBD',am:'Ali',outreach:'Sent DM',platforms:[{name:'Instagram',followers:'322K',url:'https://www.instagram.com/aymanjadaofficial/'}],why:'322K IG Qatar football creator. 74% Qatar audience. Potential Host candidate. GEO: QAT 74% · KSA 3% · UAE 8%',tags:['322K IG','QAT 74%','Host','Sent DM']},
+  {id:'ali-mousa',name:'Ali Mousa',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football',role:'Participant',tier:'Mega',igHandle:'ali_mousa96',cost:'$18,000',am:'Trendphi',outreach:'Responded',platforms:[{name:'TikTok',followers:'2.7M',url:'https://www.tiktok.com/@ali_mousa96'}],why:'2.7M TikTok football creator from Jordan. Mega tier with strong cross-market reach. Quoted $18,000. GEO: IRAQ 18% · EGY 14% · JOR 12%',tags:['2.7M TikTok','$18,000','Mega','Jordan']},
+  {id:'mohd-adnan',name:'Mohd Adnan',flag:'🇶🇦',country:'Qatar',countryCode:'Qatar',category:'Football',role:'Participant',tier:'Mega',igHandle:'mohdadnan23',cost:'TBD',am:'Trendphi',outreach:'Responded',platforms:[{name:'TikTok',followers:'—',url:'https://www.tiktok.com/@mohdadnan23'}],why:'Qatar TikTok football creator. Cross-market reach across MENA. GEO: EGY 18% · IRAQ 17% · KSA 8%',tags:['TikTok','Qatar','Mega','Cross-Market']},
+  {id:'amr-bshr',name:'Amr Bshr',flag:'🇪🇬',country:'Egypt',countryCode:'Egypt',category:'Football',role:'Participant',tier:'Mega',igHandle:'b3shr_',cost:'$15,000',am:'Trendphi',outreach:'Responded',platforms:[{name:'TikTok',followers:'1.5M',url:'https://www.tiktok.com/@b3shr_'}],why:'1.5M TikTok football from Egypt. 66% Egypt audience — dominant local reach. Quoted $15,000. GEO: EGY 66% · IRAQ 5% · KSA 6%',tags:['1.5M TikTok','$15,000','EGY 66%','Mega']},
+  {id:'omar-abd-alrahman',name:'Omar Abd Alrahman',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mega',igHandle:'omar_abuz',cost:'$35,000',am:'Trendphi',outreach:'Responded',platforms:[{name:'TikTok',followers:'3.2M',url:'https://www.tiktok.com/@omar_abuz'}],why:'3.2M TikTok from KSA. 42% KSA audience. Quoted $35,000. GEO: EGY 8% · IRAQ 11% · KSA 42%',tags:['3.2M TikTok','$35,000','KSA 42%','Mega']},
+  {id:'naba-al-dabagh',name:'Naba Al Dabagh',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Participant',tier:'Mega',igHandle:'',cost:'$14,000',am:'Trendphi',outreach:'Responded',platforms:[{name:'TikTok',followers:'1.7M',url:'#'}],why:'1.7M TikTok from UAE. Mega tier. Quoted $14,000.',tags:['1.7M TikTok','$14,000','UAE','Mega']},
+  {id:'mohmad-oman',name:'Mohmad',flag:'🇴🇲',country:'Oman',countryCode:'Oman',category:'Football',role:'Participant',tier:'Mid',igHandle:'',cost:'$14,500',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'185K',url:'#'}],why:'185K TikTok from Oman. New market coverage. Quoted $14,500.',tags:['185K TikTok','$14,500','Oman','Mid']},
+  {id:'abu-mashael',name:'Abu Mashael',flag:'🇸🇦',country:'Saudi Arabia',countryCode:'KSA',category:'Football',role:'Participant',tier:'Mega',igHandle:'',cost:'$28,000',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'5.9M',url:'#'}],why:'5.9M TikTok from KSA. Massive reach. Mega tier. Quoted $28,000.',tags:['5.9M TikTok','$28,000','KSA','Mega']},
+  {id:'khaled-uae-host',name:'Khaled (UAE)',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mega',igHandle:'',cost:'$65,000',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'2.2M',url:'#'}],why:'2.2M TikTok from UAE. Potential Host candidate. Mega tier. Quoted $65,000.',tags:['2.2M TikTok','$65,000','Host','UAE']},
+  {id:'ammar-uae',name:'Ammar',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Macro',igHandle:'',cost:'$15,000',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'421K',url:'#'}],why:'421K TikTok from UAE. Potential Host candidate. Quoted $15,000.',tags:['421K TikTok','$15,000','Host','UAE']},
+  {id:'ammer-mhd',name:'Ammer Mhd',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Participant',tier:'Macro',igHandle:'',cost:'$75,000',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'726K',url:'#'}],why:'726K TikTok from UAE. Quoted $75,000.',tags:['726K TikTok','$75,000','UAE','Macro']},
+  {id:'nissrin-hammoud',name:'Nissrin Hammoud',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Participant',tier:'Mega',igHandle:'',cost:'$15,000',am:'Mamdou7',outreach:'',platforms:[{name:'TikTok',followers:'4.1M',url:'#'}],why:'4.1M TikTok from UAE. Female voice. Mega tier. Quoted $15,000.',tags:['4.1M TikTok','$15,000','Female','Mega']},
+  {id:'alnoufali-7',name:'alnoufali_7',flag:'🇴🇲',country:'Oman',countryCode:'Oman',category:'Football',role:'Participant',tier:'Mega',igHandle:'',cost:'$24,000',am:'Mamdou7',outreach:'',platforms:[{name:'YouTube',followers:'2.9M',url:'#'}],why:'2.9M YouTube from Oman. New market coverage. Mega tier. Quoted $24,000.',tags:['2.9M YouTube','$24,000','Oman','Mega']},
+  {id:'syriangamer11',name:'SyrianGamer11',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Macro',igHandle:'syriangamer11',cost:'$8,500',am:'Ali',outreach:'Responded',platforms:[{name:'TikTok',followers:'389K',url:'#'}],why:'389K TikTok from UAE. Potential Host. Quoted $8,500.',tags:['389K TikTok','$8,500','Host','UAE']},
+  {id:'bu-rashed',name:'Bu Rashed',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Entertainment',role:'Potential Host',tier:'Macro',igHandle:'burashed.10',cost:'TBD',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'602K',url:'https://www.instagram.com/burashed.10'}],why:'602K IG Jordanian football/entertainment. Strong presenter energy — Potential Host candidate.',tags:['602K IG','Host','Jordan','Macro']},
+  {id:'husam-kwaik',name:'Husam Kwaik',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mega',igHandle:'',cost:'$8,500',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'1.9M',url:'#'}],why:'1.9M IG from UAE. Potential Host. Mega tier. Quoted $8,500.',tags:['1.9M IG','$8,500','Host','Mega']},
+  {id:'badr-x',name:'Badr X',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football',role:'Potential Host',tier:'Mid',igHandle:'',cost:'$8,500',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'47.7K',url:'#'}],why:'47.7K IG from Jordan. Potential Host. Quoted $8,500.',tags:['47.7K IG','$8,500','Host','Jordan']},
+  {id:'almuntasir',name:'ALMUNTASIR',flag:'🇦🇪',country:'UAE',countryCode:'UAE',category:'Football',role:'Potential Host',tier:'Mid',igHandle:'',cost:'$8,500',am:'Ali',outreach:'Responded',platforms:[{name:'Instagram',followers:'146K',url:'#'}],why:'146K IG from UAE. Potential Host. Quoted $8,500.',tags:['146K IG','$8,500','Host','UAE']},
+  {id:'saqer-fut',name:'Saqer Fut',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football',role:'Potential Host',tier:'Mid',igHandle:'',cost:'$8,500',am:'Ali',outreach:'Responded',platforms:[{name:'YouTube',followers:'35.9K',url:'#'}],why:'35.9K YouTube from Jordan. Potential Host. Quoted $8,500.',tags:['35.9K YouTube','$8,500','Host','Jordan']},
+  {id:'sofiane-show',name:'Sofiane Show',flag:'🇩🇿',country:'Algeria',countryCode:'Algeria',category:'Football',role:'Potential Host',tier:'Macro',igHandle:'',cost:'$17,000',am:'Mamdou7',outreach:'Responded',platforms:[{name:'TikTok',followers:'860K',url:'#'}],why:'860K TikTok from Algeria. New market. Potential Host candidate. Quoted $17,000.',tags:['860K TikTok','$17,000','Algeria','Host']},
+  {id:'myfitmaya',name:'MyFitMaya',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Sports / Lifestyle',role:'Participant',tier:'Macro',igHandle:'myfitmaya',cost:'TBD',am:'—',outreach:'',platforms:[{name:'Instagram',followers:'184K',url:'https://www.instagram.com/myfitmaya'}],why:'184K IG sports/lifestyle creator from Jordan. Female voice diversifies roster.',tags:['184K IG','Female Voice','Jordan','Macro']},
+  {id:'ali-abusrwal',name:'Ali Abu Srwal',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Football / Gaming',role:'Participant',tier:'Mega',igHandle:'abu_srwal',cost:'TBD',am:'—',outreach:'',platforms:[{name:'Instagram',followers:'3M',url:'https://www.instagram.com/abu_srwal/'},{name:'YouTube',followers:'4.14M',url:'https://www.youtube.com/@abusrwal'}],why:'3M IG + 4.14M YT — Jordan biggest football/gaming creator. La Liga ambassador.',tags:['3M IG','4.14M YT','La Liga','Gaming']},
+  {id:'mahmood-fahmawi',name:'Mahmood Fahmawi',flag:'🇯🇴',country:'Jordan',countryCode:'Jordan',category:'Lifestyle / Entertainment',role:'Potential Host',tier:'Mega',igHandle:'fa7mawii_',cost:'TBD',am:'—',outreach:'',platforms:[{name:'Instagram',followers:'303K',url:'https://www.instagram.com/fa7mawii_'}],why:'303K IG Jordanian creator. Strong on-camera presence — Potential Host candidate.',tags:['303K IG','Host','Jordan','Mega']},
+  {id:'douha',name:'Douha Laribi',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Celebrity',igHandle:'douhalaribi',cost:'TBD',am:'—',outreach:'',platforms:[{name:'TikTok',followers:'18.8M',url:'https://www.tiktok.com/@douhalaribi'}],why:'18.8M TikTok — biggest creator in roster. TikTok MENA Best Audience award. Tunisia #1 female influencer.',tags:['18.8M TikTok','Tunisia #1','MENA Award','Celebrity']},
+  {id:'nawres',name:'Nawres Briki',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Mega',igHandle:'nawres_briki',cost:'TBD',am:'—',outreach:'',platforms:[{name:'TikTok',followers:'1M+',url:'https://www.tiktok.com/@nawres_briki'}],why:'1M+ TikTok entertainment creator from Tunisia. Young audience.',tags:['1M+ TikTok','Tunisia','Young Audience','Mega']},
+  {id:'rafik',name:'Rafik Aouay',flag:'🇹🇳',country:'Tunisia',countryCode:'Tunisia',category:'Entertainment',role:'Participant',tier:'Macro',igHandle:'rafik_aouay',cost:'TBD',am:'—',outreach:'',platforms:[{name:'TikTok',followers:'500K+',url:'https://www.tiktok.com/@rafik_aouay'}],why:'500K+ TikTok entertainment from Tunisia.',tags:['500K+ TikTok','Tunisia','Entertainment','Macro']},
+  {id:'farid',name:'Farid Kenzo',flag:'🇮🇶',country:'Iraq',countryCode:'Iraq',category:'Entertainment',role:'Participant',tier:'Mega',igHandle:'farid__kenzo8',cost:'TBD',am:'—',outreach:'',platforms:[{name:'Instagram',followers:'7.2M',url:'https://www.instagram.com/farid__kenzo8'}],why:'7.2M IG — biggest Iraqi creator. Essential market coverage.',tags:['7.2M IG','Iraq #1','Mega','Entertainment']}
 ];
 
 let activeFilter='all';
+
 
 function getAvatar(c,size){
   const cls=size==='lg'?'expanded-avatar':'card-avatar';
@@ -664,8 +724,11 @@ function buildCard(c){
   const rb=`<span class="card-role-badge ${isMC?'mc-badge':'part-badge'}">${rl}</span>`;
   const tb=c.tier&&c.tier!=='—'?`<span class="card-tier${tierClass(c.tier)}">${c.tier}</span>`:'';
   const st=c.platforms.map(p=>`<div class="card-stat"><span class="cs-val">${p.followers}</span><span class="cs-plat">${p.name}</span></div>`).join('');
-  const tg=c.tags.slice(0,3).map(t=>`<span class="card-tag">${t}</span>`).join('');
+  const tg=c.tags.filter(t=>!t.startsWith('$')).slice(0,3).map(t=>`<span class="card-tag">${t}</span>`).join('');
   const handle=c.igHandle?`<div class="card-handle">@${c.igHandle}</div>`:'';
+  const costHtml=c.cost?`<span class="card-cost ${c.cost==='TBD'?'tbd':'has-price'}">${c.cost}</span>`:'';
+  const amHtml='';
+  const orHtml='';
   return `<div class="creator-card ${isMC?'mc-card':''} ${sc}" data-id="${c.id}" data-country="${c.countryCode}" onclick="openCard('${c.id}')">
     ${si?`<div class="card-review-indicator">${si}</div>`:''}
     <div class="card-hero">
@@ -679,17 +742,19 @@ function buildCard(c){
     <div class="card-body">
       <div class="card-role-row">${rb}${tb}</div>
       <div class="card-stats">${st}</div>
+      <div class="card-bottom-row">${costHtml}</div>
       <div class="card-tags">${tg}</div>
     </div>
   </div>`;
 }
 
-function renderGrid(){document.getElementById('creatorsGrid').innerHTML=creators.map(buildCard).join('');applyFilter()}
-function renderFilterTabs(){const cn={all:creators.length};countryData.forEach(cd=>{cn[cd.code]=creators.filter(c=>c.countryCode===cd.code).length});let h=`<div class="filter-tab active" onclick="setFilter('all',this)"><span>All</span><span class="ft-count">${cn.all}</span></div>`;countryData.forEach(cd=>{h+=`<div class="filter-tab" onclick="setFilter('${cd.code}',this)"><span class="ft-flag">${cd.flag}</span><span>${cd.name}</span><span class="ft-count">${cn[cd.code]}</span></div>`});document.getElementById('filterTabs').innerHTML=h}
+function visibleCreators(){return creators.filter(c=>c.outreach==='Responded'&&!c.hidden)}
+function renderGrid(){document.getElementById('creatorsGrid').innerHTML=visibleCreators().map(buildCard).join('');applyFilter()}
+function renderFilterTabs(){const vc=visibleCreators();const cn={all:vc.length};countryData.forEach(cd=>{cn[cd.code]=vc.filter(c=>c.countryCode===cd.code).length});let h=`<div class="filter-tab active" onclick="setFilter('all',this)"><span>All</span><span class="ft-count">${cn.all}</span></div>`;countryData.forEach(cd=>{if(cn[cd.code]>0)h+=`<div class="filter-tab" onclick="setFilter('${cd.code}',this)"><span class="ft-flag">${cd.flag}</span><span>${cd.name}</span><span class="ft-count">${cn[cd.code]}</span></div>`});document.getElementById('filterTabs').innerHTML=h}
 function setFilter(code,tab){activeFilter=code;document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');applyFilter()}
 function applyFilter(){document.querySelectorAll('.creator-card').forEach(card=>{if(activeFilter==='all'||card.dataset.country===activeFilter)card.classList.remove('hidden');else card.classList.add('hidden')})}
 function updateCardStatus(id){document.querySelectorAll(`.creator-card[data-id="${id}"]`).forEach(card=>{card.classList.remove('status-approved','status-rejected','status-discuss');if(reviewState[id])card.classList.add(`status-${reviewState[id]}`);const ind=card.querySelector('.card-review-indicator');const ic={approved:'✅',rejected:'❌',discuss:'💬'}[reviewState[id]]||'';if(ind)ind.textContent=ic;else if(ic){const d=document.createElement('div');d.className='card-review-indicator';d.textContent=ic;card.appendChild(d)}})}
-function renderCountryGrid(){document.getElementById('countryGrid').innerHTML=countryData.map(cd=>{const cnt=creators.filter(c=>c.countryCode===cd.code).length;const ap=creators.filter(c=>c.countryCode===cd.code&&reviewState[c.id]==='approved').length;const rj=creators.filter(c=>c.countryCode===cd.code&&reviewState[c.id]==='rejected').length;let sh='';if(ap>0||rj>0){sh='<div class="country-status">';if(ap>0)sh+=`<span style="color:var(--electric)">${ap} ✓</span> `;if(rj>0)sh+=`<span style="color:var(--red)">${rj} ✗</span>`;sh+='</div>'}return `<div class="country-card"><div class="country-flag">${cd.flag}</div><div class="country-name">${cd.name}</div><div class="country-count">${cnt} creator${cnt!==1?'s':''}</div>${sh}</div>`}).join('')}
+function renderCountryGrid(){const vc=visibleCreators();document.getElementById('countryGrid').innerHTML=countryData.filter(cd=>vc.some(c=>c.countryCode===cd.code)).map(cd=>{const cnt=vc.filter(c=>c.countryCode===cd.code).length;const ap=vc.filter(c=>c.countryCode===cd.code&&reviewState[c.id]==='approved').length;const rj=vc.filter(c=>c.countryCode===cd.code&&reviewState[c.id]==='rejected').length;let sh='';if(ap>0||rj>0){sh='<div class="country-status">';if(ap>0)sh+=`<span style="color:var(--electric)">${ap} ✓</span> `;if(rj>0)sh+=`<span style="color:var(--red)">${rj} ✗</span>`;sh+='</div>'}return `<div class="country-card"><div class="country-flag">${cd.flag}</div><div class="country-name">${cd.name}</div><div class="country-count">${cnt} creator${cnt!==1?'s':''}</div>${sh}</div>`}).join('')}
 function renderCountryRequests(){document.getElementById('countryRequestGrid').innerHTML=countryData.map(cd=>{const cnt=creators.filter(c=>c.countryCode===cd.code).length;const ir=countryRequests[cd.code];return `<div class="country-request-row"><span class="cflag">${cd.flag}</span><span class="cname">${cd.name}</span><span class="ccount">${cnt} now</span><button class="request-more-btn ${ir?'requested':''}" onclick="toggleRequest('${cd.code}',this)">${ir?'✓ Requested':'+ More'}</button></div>`}).join('')}
 function toggleRequest(code,btn){countryRequests[code]=!countryRequests[code];const cd=countryData.find(c=>c.code===code);btn.classList.toggle('requested');btn.textContent=countryRequests[code]?'✓ Requested':'+ More';if(countryRequests[code])showToast(`${cd.flag} More creators requested for ${cd.name}`);scheduleSave()}
 
@@ -699,13 +764,16 @@ function openCard(id){
   document.querySelectorAll(`.creator-card[data-id="${id}"]`).forEach(ch=>ch.classList.add('active'));
   const pl=c.platforms.map(p=>`<a href="${p.url}" target="_blank" class="profile-link">▸ ${p.name} <span style="color:var(--gold)">${p.followers}</span></a>`).join('');
   const st=c.platforms.map(p=>`<div class="stat-pill"><div class="val">${p.followers}</div><div class="lbl">${p.name}</div></div>`).join('');
-  const tg=c.tags.map(t=>`<span class="why-tag">${t}</span>`).join('');
+  const tg=c.tags.filter(t=>!t.startsWith('$')).map(t=>`<span class="why-tag">${t}</span>`).join('');
   const isMC=c.role==='MC Host'||c.role==='Potential Host';
   const rc=isMC?'var(--gold)':'var(--electric)';
   const cs=reviewState[c.id]||'',cn=clientNotes[c.id]||'';
+  const costHtml=c.cost?`<div class="stat-pill"><div class="val" style="color:${c.cost==='TBD'?'var(--red)':'var(--electric)'}">${c.cost}</div><div class="lbl">Quoted Rate</div></div>`:'';
+  const amHtml='';
+  const orHtml='';
   document.getElementById('cardContent').innerHTML=`
     <div class="expanded-header">${getAvatar(c,'lg')}<div class="expanded-info"><div class="expanded-name">${c.name}</div><div class="expanded-meta"><span>📍 ${c.country}</span><span>⚽ ${c.category}</span><span style="color:${rc};font-weight:600">${c.role}</span>${c.tier&&c.tier!=='—'?`<span style="color:var(--text-muted)">${c.tier}</span>`:''}</div></div></div>
-    <div class="expanded-stats">${st}</div>
+    <div class="expanded-stats">${st}${costHtml}</div>
     <div class="why-section"><div class="why-title">Why This Creator Was Selected</div><div class="why-text">${c.why}</div><div class="why-tags">${tg}</div></div>
     <div class="expanded-links">${pl}</div>
     <div class="review-actions">
@@ -726,46 +794,108 @@ function exportReview(){const l=['OKX "Cheer Your Nation Live" — Creator Revie
 
 document.getElementById('creatorOverlay').addEventListener('click',function(e){if(e.target===this)closeCard()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCard();closeAdmin()}});
-renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();initSupabase();
+renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();updateHeroCount();initSupabase();
 
 /* ═══════════════════════ ADMIN PORTAL ═══════════════════════ */
 const ADMIN_USER='alaa',ADMIN_PASS='alaa2026';
 let adminLoggedIn=false,pendingCreators=[];
-const countryMap={'Saudi Arabia':{code:'KSA',flag:'🇸🇦'},'UAE':{code:'UAE',flag:'🇦🇪'},'Egypt':{code:'Egypt',flag:'🇪🇬'},'Morocco':{code:'Morocco',flag:'🇲🇦'},'Jordan':{code:'Jordan',flag:'🇯🇴'},'Tunisia':{code:'Tunisia',flag:'🇹🇳'},'Iraq':{code:'Iraq',flag:'🇮🇶'},'Qatar':{code:'Qatar',flag:'🇶🇦'}};
+const countryMap={'Saudi Arabia':{code:'KSA',flag:'🇸🇦'},'UAE':{code:'UAE',flag:'🇦🇪'},'Egypt':{code:'Egypt',flag:'🇪🇬'},'Morocco':{code:'Morocco',flag:'🇲🇦'},'Jordan':{code:'Jordan',flag:'🇯🇴'},'Tunisia':{code:'Tunisia',flag:'🇹🇳'},'Iraq':{code:'Iraq',flag:'🇮🇶'},'Qatar':{code:'Qatar',flag:'🇶🇦'},'Bahrain':{code:'Bahrain',flag:'🇧🇭'},'Oman':{code:'Oman',flag:'🇴🇲'},'Algeria':{code:'Algeria',flag:'🇩🇿'}};
 
-function openAdmin(){document.getElementById('adminOverlay').classList.add('visible');if(adminLoggedIn){document.getElementById('adminModal').classList.remove('admin-login');refreshDashboard()}else{document.getElementById('adminModal').classList.add('admin-login')}}
+function updateHeroCount(){
+  const vc=visibleCreators();
+  const el=document.getElementById('heroCreatorCount');if(el)el.textContent=vc.length;
+  const sp=document.getElementById('statPending');if(sp)sp.textContent=vc.filter(c=>!reviewState[c.id]).length;
+}
+
+function openAdmin(){document.getElementById('adminOverlay').classList.add('visible');if(adminLoggedIn){document.getElementById('adminModal').classList.remove('admin-login');renderRosterTable();refreshDashboard()}else{document.getElementById('adminModal').classList.add('admin-login')}}
 function closeAdmin(){document.getElementById('adminOverlay').classList.remove('visible')}
 document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)closeAdmin()});
 document.getElementById('adminPass').addEventListener('keydown',function(e){if(e.key==='Enter')adminLogin()});
 
 function adminLogin(){
   const u=document.getElementById('adminUser').value.trim(),p=document.getElementById('adminPass').value.trim();
-  if(u===ADMIN_USER&&p===ADMIN_PASS){adminLoggedIn=true;document.getElementById('adminLoginView').style.display='none';document.getElementById('adminDashView').style.display='block';document.getElementById('adminModal').classList.remove('admin-login');document.getElementById('adminError').style.display='none';refreshDashboard();showToast('🔓 Agency portal unlocked')}
+  if(u===ADMIN_USER&&p===ADMIN_PASS){adminLoggedIn=true;document.getElementById('adminLoginView').style.display='none';document.getElementById('adminDashView').style.display='block';document.getElementById('adminModal').classList.remove('admin-login');document.getElementById('adminError').style.display='none';renderRosterTable();refreshDashboard();showToast('🔓 Agency portal unlocked')}
   else{document.getElementById('adminError').style.display='block'}
 }
 
-function switchAdminTab(tab,el){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));document.getElementById({upload:'adminUpload',dashboard:'adminDashboard',requests:'adminRequests'}[tab]).classList.add('active');if(tab==='dashboard'||tab==='requests')refreshDashboard()}
+function switchAdminTab(tab,el){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));const map={manage:'adminManage',upload:'adminUpload',dashboard:'adminDashboard',requests:'adminRequests'};document.getElementById(map[tab]).classList.add('active');if(tab==='manage')renderRosterTable();if(tab==='dashboard'||tab==='requests')refreshDashboard()}
 
+/* ── ROSTER MANAGEMENT TABLE ── */
+function renderRosterTable(){
+  const search=(document.getElementById('rosterSearch')||{}).value||'';
+  const filter=(document.getElementById('rosterFilter')||{}).value||'all';
+  const q=search.toLowerCase();
+  let list=creators.filter(c=>{
+    if(q&&!c.name.toLowerCase().includes(q)&&!c.country.toLowerCase().includes(q))return false;
+    if(filter==='Responded')return c.outreach==='Responded'&&!c.hidden;
+    if(filter==='Sent DM')return c.outreach==='Sent DM';
+    if(filter==='hidden')return c.hidden;
+    if(filter==='noresponse')return !c.outreach&&!c.hidden;
+    return true;
+  });
+  const tbody=document.getElementById('rosterTableBody');
+  tbody.innerHTML=list.map(c=>{
+    const vis=c.outreach==='Responded'&&!c.hidden;
+    const visIcon=vis?'👁':'🙈';
+    const visClass=c.hidden?'opacity:0.4':'';
+    const statusColor=c.outreach==='Responded'?'var(--electric)':c.outreach==='Sent DM'?'var(--gold)':'var(--text-muted)';
+    const costVal=c.cost||'TBD';
+    const costColor=costVal==='TBD'?'var(--red)':'var(--electric)';
+    return `<tr style="${visClass}">
+      <td><button onclick="toggleHide('${c.id}')" style="background:none;border:none;cursor:pointer;font-size:1rem" title="${c.hidden?'Show to client':'Hide from client'}">${visIcon}</button></td>
+      <td style="font-weight:600">${c.flag} ${c.name}</td>
+      <td>${c.country}</td>
+      <td>${c.platforms[0]?.name||'—'}</td>
+      <td>${c.platforms[0]?.followers||'—'}</td>
+      <td><input type="text" value="${costVal}" onchange="updateCost('${c.id}',this.value)" style="width:80px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:0.25rem 0.4rem;color:${costColor};font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;text-align:center"></td>
+      <td><select onchange="updateStatus('${c.id}',this.value)" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:0.2rem;color:${statusColor};font-size:0.65rem">
+        <option value="" ${!c.outreach?'selected':''}>—</option>
+        <option value="Responded" ${c.outreach==='Responded'?'selected':''}>Responded</option>
+        <option value="Sent DM" ${c.outreach==='Sent DM'?'selected':''}>Sent DM</option>
+      </select></td>
+      <td><button onclick="removeCreator('${c.id}')" style="background:none;border:1px solid rgba(255,68,85,0.15);border-radius:6px;cursor:pointer;color:var(--red);font-size:0.6rem;padding:0.2rem 0.5rem">✕ Remove</button></td>
+    </tr>`}).join('');
+  const summary=document.getElementById('rosterSummary');
+  if(!summary){const s=document.createElement('div');s.id='rosterSummary';s.style.cssText='font-size:0.7rem;color:var(--text-muted);margin-top:0.6rem';document.getElementById('rosterTableBody').parentElement.parentElement.appendChild(s)}
+  const total=creators.length,responded=creators.filter(c=>c.outreach==='Responded'&&!c.hidden).length,hidden=creators.filter(c=>c.hidden).length;
+  (document.getElementById('rosterSummary')||{}).innerHTML=`<strong>${total}</strong> total · <strong style="color:var(--electric)">${responded}</strong> visible to client · <strong>${hidden}</strong> hidden`;
+}
+
+function toggleHide(id){const c=creators.find(x=>x.id===id);if(!c)return;c.hidden=!c.hidden;renderRosterTable();refreshClientView();showToast(c.hidden?`🙈 ${c.name} hidden`:`👁 ${c.name} visible`)}
+function updateCost(id,val){const c=creators.find(x=>x.id===id);if(!c)return;c.cost=val.trim();refreshClientView();showToast(`💰 ${c.name} → ${val}`)}
+function updateStatus(id,val){const c=creators.find(x=>x.id===id);if(!c)return;c.outreach=val;renderRosterTable();refreshClientView();showToast(`📡 ${c.name} → ${val||'No status'}`)}
+function removeCreator(id){const c=creators.find(x=>x.id===id);if(!c)return;if(!confirm(`Remove ${c.name} from roster?`))return;creators.splice(creators.indexOf(c),1);renderRosterTable();refreshClientView();showToast(`❌ ${c.name} removed`)}
+function showAllCreators(){creators.forEach(c=>c.hidden=false);renderRosterTable();refreshClientView();showToast('👁 All creators visible')}
+function hideNonResponded(){creators.forEach(c=>{if(c.outreach!=='Responded')c.hidden=true});renderRosterTable();refreshClientView();showToast('🙈 Non-responded creators hidden')}
+function saveRosterChanges(){scheduleSave();renderRosterTable();refreshClientView();showToast('💾 All changes saved & synced')}
+
+function refreshClientView(){renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();updateReviewStats();updateHeroCount()}
+
+/* ── CLIENT DECISIONS DASHBOARD ── */
 function refreshDashboard(){
   const sections={approved:'dashApproved',rejected:'dashRejected',discuss:'dashDiscuss'};
-  const icons={approved:'✅',rejected:'❌',discuss:'💬'};
   Object.entries(sections).forEach(([status,elId])=>{
     const matches=creators.filter(c=>reviewState[c.id]===status);
     const el=document.getElementById(elId);
     if(!matches.length){el.innerHTML='<div class="dash-empty">None</div>';return}
-    el.innerHTML=matches.map(c=>`<div class="dash-row"><span class="d-flag">${c.flag}</span><span class="d-name">${c.name}</span><span class="d-country">${c.country}</span>${clientNotes[c.id]?`<div class="d-note">📝 ${clientNotes[c.id]}</div>`:''}</div>`).join('');
+    el.innerHTML=matches.map(c=>`<div class="dash-row"><span class="d-flag">${c.flag}</span><span class="d-name">${c.name}</span><span class="d-country">${c.country}</span>${c.cost&&c.cost!=='TBD'?`<span style="color:var(--electric);font-size:0.65rem;font-weight:700">${c.cost}</span>`:''}${clientNotes[c.id]?`<div class="d-note">📝 ${clientNotes[c.id]}</div>`:''}</div>`).join('');
   });
-  const pending=creators.filter(c=>!reviewState[c.id]);
+  const pending=visibleCreators().filter(c=>!reviewState[c.id]);
   document.getElementById('dashPending').innerHTML=pending.length?pending.map(c=>`<div class="dash-row"><span class="d-flag">${c.flag}</span><span class="d-name">${c.name}</span><span class="d-country">${c.country}</span></div>`).join(''):'<div class="dash-empty">All creators reviewed!</div>';
   const reqCountries=Object.entries(countryRequests).filter(([,v])=>v);
   document.getElementById('dashCountryReqs').innerHTML=reqCountries.length?reqCountries.map(([code])=>{const cd=countryData.find(c=>c.code===code);return cd?`<div class="dash-row"><span class="d-flag">${cd.flag}</span><span class="d-name">${cd.name}</span><span class="d-country">Client wants more creators</span></div>`:''}).join(''):'<div class="dash-empty">No additional creator requests from client</div>';
 }
 
-/* Excel Upload */
+/* ── EXCEL UPLOAD (SMART DEDUP) ── */
 const uploadZone=document.getElementById('uploadZone');
 uploadZone.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover')});
 uploadZone.addEventListener('dragleave',function(){this.classList.remove('dragover')});
 uploadZone.addEventListener('drop',function(e){e.preventDefault();this.classList.remove('dragover');if(e.dataTransfer.files.length)handleExcelUpload(e.dataTransfer.files[0])});
+
+function normalizeId(name){return name.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,30)}
+function normalizeTier(t){const m={'mic':'Micro','mac':'Macro'};return m[(t||'').toLowerCase()]||t}
+function normalizePlatform(p){const m={'tkitok':'TikTok','youtube':'YouTube','instagram':'Instagram','tiktok':'TikTok'};return m[(p||'').toLowerCase()]||p}
+function normalizeFollowers(f){const s=String(f||'').replace(/,/g,'');if(!s)return '—';const n=parseFloat(s);if(isNaN(n))return s;if(n>=1000000)return (n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return s}
 
 function handleExcelUpload(file){
   if(!file)return;
@@ -776,20 +906,66 @@ function handleExcelUpload(file){
       const ws=wb.Sheets[wb.SheetNames[0]];
       const rows=XLSX.utils.sheet_to_json(ws);
       if(!rows.length){showToast('⚠️ Empty file');return}
-      pendingCreators=rows.map(r=>{
-        const country=r['Country']||'';
-        const cm=countryMap[country]||{code:country,flag:'🏳️'};
-        const platforms=[];
-        for(let i=1;i<=3;i++){if(r[`Platform${i}`]&&r[`Followers${i}`])platforms.push({name:r[`Platform${i}`],followers:String(r[`Followers${i}`]),url:r[`URL${i}`]||'#'})}
-        if(!platforms.length&&r['Instagram Handle'])platforms.push({name:'Instagram',followers:'—',url:`https://www.instagram.com/${(r['Instagram Handle']||'').replace('@','')}/`});
-        const tags=(r['Tags']||'').split(',').map(t=>t.trim()).filter(Boolean);
-        const id=(r['Name']||'').toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').slice(0,30)+'-'+Date.now().toString(36).slice(-4);
-        return{id,name:r['Name']||'Unknown',flag:cm.flag,country,countryCode:cm.code,category:r['Category']||'Entertainment',role:r['Role']||'Participant',tier:r['Tier']||'—',igHandle:(r['Instagram Handle']||'').replace('@',''),platforms,why:r['Why Selected']||'Added by agency via bulk upload.',tags:tags.length?tags:[(r['Tier']||''),country].filter(Boolean)};
+
+      let added=0,updated=0,skipped=0;
+      pendingCreators=[];
+
+      rows.forEach(r=>{
+        const name=(r['KOL']||r['Name']||'').trim();
+        if(!name||name==='↳')return;
+
+        const market=(r['Market']||r['Country']||'').trim();
+        const cm=countryMap[market]||countryMap[market.charAt(0).toUpperCase()+market.slice(1)]||{code:market,flag:'🏳️'};
+        const platform=normalizePlatform(r['Platform']||r['Platform1']||'');
+        const followers=normalizeFollowers(r['Followers']||r['Followers1']||'');
+        const link=(r['Link']||r['URL1']||'#').trim();
+        const tier=normalizeTier(r['Creator Tier']||r['Tier']||'');
+        const role=(r['Role']||'Participant').trim();
+        const status=(r['Status']||'').trim();
+        const category=(r['Category']||'Football').trim().replace(/\n/g,' ');
+        let cost=r['Cost (USD)']||r['Cost']||'TBD';
+        if(typeof cost==='number')cost='$'+cost.toLocaleString('en-US');
+        else if(typeof cost==='string'&&cost.startsWith('='))cost='TBD';
+        else if(cost!=='TBD'&&!String(cost).startsWith('$'))cost='$'+cost;
+        const geo=(r['GEO']||'').replace(/\n/g,' · ');
+
+        let igHandle='';
+        if(link.includes('instagram.com/'))igHandle=link.split('instagram.com/').pop().replace(/\//g,'');
+        else if(link.includes('tiktok.com/@'))igHandle=link.split('tiktok.com/@').pop().replace(/\//g,'');
+        else if(link.includes('youtube.com/@'))igHandle=link.split('youtube.com/@').pop().replace(/\//g,'');
+        else igHandle=(r['Instagram Handle']||'').replace('@','');
+
+        const id=normalizeId(name);
+        const existing=creators.find(x=>x.id===id||x.name.toLowerCase()===name.toLowerCase());
+
+        if(existing){
+          if(cost&&cost!=='TBD')existing.cost=cost;
+          if(status)existing.outreach=status;
+          if(followers&&followers!=='—')existing.platforms[0].followers=followers;
+          updated++;
+        } else {
+          const why=`${followers} ${platform} ${category} creator from ${market}.${cost!=='TBD'?' Quoted '+cost+'.':''}${geo?' GEO: '+geo:''}`;
+          pendingCreators.push({id:id+'-'+Date.now().toString(36).slice(-3),name,flag:cm.flag,country:market,countryCode:cm.code,category,role,tier,igHandle,cost,am:'',outreach:status,hidden:false,platforms:[{name:platform,followers,url:link}],why,tags:[followers+' '+platform,cm.code,tier].filter(Boolean)});
+          added++;
+        }
       });
-      const tbody=document.getElementById('uploadPreviewBody');
-      tbody.innerHTML=pendingCreators.map(c=>`<tr><td style="font-weight:600">${c.name}</td><td>${c.flag} ${c.country}</td><td style="color:var(--gold-dim)">@${c.igHandle||'—'}</td><td>${c.role}</td><td>${c.tier}</td><td>${c.platforms.map(p=>p.followers+' '+p.name).join(', ')}</td></tr>`).join('');
-      document.getElementById('uploadPreview').style.display='block';
-      showToast(`📊 ${pendingCreators.length} creator${pendingCreators.length>1?'s':''} parsed from ${file.name}`);
+
+      if(pendingCreators.length){
+        const tbody=document.getElementById('uploadPreviewBody');
+        tbody.innerHTML=pendingCreators.map(c=>`<tr><td style="font-weight:600">${c.name}</td><td>${c.flag} ${c.country}</td><td style="color:var(--gold-dim)">@${c.igHandle||'—'}</td><td>${c.role}</td><td>${c.tier}</td><td>${c.cost}</td></tr>`).join('');
+        document.getElementById('uploadPreview').style.display='block';
+      } else {
+        document.getElementById('uploadPreview').style.display='none';
+      }
+
+      let msg=`📊 ${file.name}: `;
+      if(updated)msg+=`${updated} updated`;
+      if(updated&&added)msg+=', ';
+      if(added)msg+=`${added} new`;
+      if(!updated&&!added)msg+='no changes';
+      showToast(msg);
+
+      if(updated){renderRosterTable();refreshClientView()}
     }catch(err){console.error(err);showToast('⚠️ Error reading file — check format')}
   };
   reader.readAsArrayBuffer(file);
@@ -799,24 +975,22 @@ function confirmUpload(){
   if(!pendingCreators.length)return;
   const added=pendingCreators.length;
   pendingCreators.forEach(c=>{
-    if(!creators.find(x=>x.id===c.id))creators.push(c);
-    const cd=countryData.find(d=>d.code===c.countryCode);
-    if(!cd&&c.countryCode)countryData.push({code:c.countryCode,name:c.country,flag:c.flag});
+    creators.push(c);
+    if(!countryData.find(d=>d.code===c.countryCode)&&c.countryCode)countryData.push({code:c.countryCode,name:c.country,flag:c.flag});
   });
-  renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();updateReviewStats();
   document.getElementById('uploadPreview').style.display='none';
   document.getElementById('uploadPreviewBody').innerHTML='';
   pendingCreators=[];
   scheduleSave();
-  showToast(`✅ ${added} creator${added>1?'s':''} added to the roster!`);
+  renderRosterTable();refreshClientView();
+  showToast(`✅ ${added} new creator${added>1?'s':''} added!`);
 }
 
 function downloadTemplate(){
-  const headers=['Name','Country','Instagram Handle','Role','Category','Tier','Platform1','Followers1','URL1','Platform2','Followers2','URL2','Platform3','Followers3','URL3','Why Selected','Tags'];
-  const sample=[['Ahmed Example','Saudi Arabia','ahmed_example','Participant','Football','Macro','Instagram','500K','https://www.instagram.com/ahmed_example/','TikTok','300K','https://www.tiktok.com/@ahmed_example','','','','Strong football creator with engaged KSA audience','500K IG, 300K TikTok, KSA Football']];
+  const headers=['KOL','Market','Platform','Followers','Role','Creator Tier','Link','Status','Cost (USD)','GEO','Category'];
+  const sample=[['Ahmed Example','Saudi Arabia','Instagram','500K','Participant','Macro','https://www.instagram.com/ahmed_example/','Responded','13500','KSA 50% · UAE 20%','Football']];
   const ws=XLSX.utils.aoa_to_sheet([headers,...sample]);
-  const colWidths=headers.map(h=>({wch:Math.max(h.length+2,18)}));
-  ws['!cols']=colWidths;
+  ws['!cols']=headers.map(h=>({wch:Math.max(h.length+2,16)}));
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Creators');
   XLSX.writeFile(wb,'OKX_Creator_Upload_Template.xlsx');
