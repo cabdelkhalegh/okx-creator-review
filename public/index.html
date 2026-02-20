@@ -655,7 +655,7 @@ section{padding:6rem 0}
 <div class="toast" id="toast"></div>
 
 <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script defer src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <script>
 const reviewState={},clientNotes={},countryRequests={};
 let saveTimer=null;
@@ -1012,6 +1012,7 @@ function normalizeFollowers(f){const s=String(f||'').replace(/,/g,'');if(!s)retu
 
 function handleExcelUpload(file){
   if(!file)return;
+  if(typeof window.XLSX==='undefined'){showToast('⚠️ Excel tools are still loading. Please try again in a few seconds.');return}
   const reader=new FileReader();
   reader.onload=function(e){
     try{
@@ -1100,6 +1101,7 @@ function confirmUpload(){
 }
 
 function downloadTemplate(){
+  if(typeof window.XLSX==='undefined'){showToast('⚠️ Excel template is unavailable until SheetJS loads.');return}
   const headers=['KOL','Market','Platform','Followers','Role','Creator Tier','Link','Status','Cost (USD)','GEO','Category'];
   const sample=[['Ahmed Example','Saudi Arabia','Instagram','500K','Participant','Macro','https://www.instagram.com/ahmed_example/','Responded','13500','KSA 50% · UAE 20%','Football']];
   const ws=XLSX.utils.aoa_to_sheet([headers,...sample]);
