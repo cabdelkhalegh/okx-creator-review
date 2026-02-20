@@ -830,7 +830,12 @@ function exportReview(){const vc=visibleCreators();const l=['OKX "Cheer Your Nat
 
 document.getElementById('creatorOverlay').addEventListener('click',function(e){if(e.target===this)closeCard()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCard();closeAdmin()}});
-renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();updateHeroCount();updateBudget();initSupabase();
+function bootstrapApp(){
+  try{renderGrid();renderFilterTabs();renderCountryGrid();renderCountryRequests();updateHeroCount();updateBudget();}
+  catch(e){console.error('UI bootstrap failed',e);showToast('⚠️ Some sections failed to render. Data sync will continue.')}
+  finally{initSupabase();}
+}
+bootstrapApp();
 
 /* ═══════════════════════ ADMIN PORTAL ═══════════════════════ */
 const ADMIN_USER='alaa',ADMIN_PASS='alaa2026';
